@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FrameData } from '@app/service';
 import { EvaluateQueryItemProvider } from '@modules/evaluate/provider/evaluate-query-item.provider';
 import { EvaluateResult } from '@modules/evaluate/type/evaluate.type';
 import { StashPriceTagType } from '@shared/module/poe/service';
@@ -12,7 +12,7 @@ import { EvaluateUserSettings } from '../evaluate-settings/evaluate-settings.com
 
 const CURRENCIES_CACHE_SIZE = 1;
 
-export interface EvaluateDialogData {
+export interface EvaluateDialogData extends FrameData {
   item: Item;
   settings: EvaluateUserSettings;
   language?: Language;
@@ -37,10 +37,13 @@ export class EvaluateDialogComponent implements OnInit, AfterViewInit, OnDestroy
 
   public init$ = new BehaviorSubject<boolean>(false);
 
+  @Input()
+  public data: EvaluateDialogData;
+
+  @Output()
+  public close = new EventEmitter<EvaluateResult>();
+
   constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public data: EvaluateDialogData,
-    private readonly ref: MatDialogRef<EvaluateDialogComponent>,
     private readonly evaluateQueryItemProvider: EvaluateQueryItemProvider,
     private readonly currencyService: CurrencyService) {
   }
@@ -97,7 +100,7 @@ export class EvaluateDialogComponent implements OnInit, AfterViewInit, OnDestroy
       ))
     ).subscribe(([result, double]) => {
       const type = double ? StashPriceTagType.Negotiable : StashPriceTagType.Exact;
-      this.ref.close({ ...result, type });
+      this.close.next({ ...result, type })
     });
   }
 

@@ -1,8 +1,9 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BookmarkModule } from '@modules/bookmark/bookmark.module';
 import { CommandModule } from '@modules/command/command.module';
+import { EVALUATE_MODULE_FRAME_ROUTES } from '@modules/evaluate/evaluate-module.routes';
 import { EvaluateModule } from '@modules/evaluate/evaluate.module';
 import { MapModule } from '@modules/map/map.module';
 import { MiscModule } from '@modules/misc/misc.module';
@@ -10,8 +11,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { AppTranslationsLoader } from './app-translations.loader';
 import { AppComponent } from './app.component';
+import { LAYOUT_MODULE_ROUTES } from './layout/layout-module.routes';
 import { LayoutModule } from './layout/layout.module';
-import { OverlayComponent, UserSettingsComponent } from './layout/page';
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
@@ -27,24 +28,15 @@ export class CacheInterceptor implements HttpInterceptor {
   }
 }
 
-const routes: Routes = [
-  {
-    path: 'user-settings',
-    component: UserSettingsComponent,
-  },
-  {
-    path: '**',
-    component: OverlayComponent
-  }
-];
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
     // routing
-    RouterModule.forRoot(routes, {
-      useHash: true
-    }),
+    RouterModule.forRoot([
+      ...LAYOUT_MODULE_ROUTES([
+        ...EVALUATE_MODULE_FRAME_ROUTES
+      ])
+    ], { useHash: true }),
 
     // translate
     TranslateModule.forRoot({

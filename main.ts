@@ -7,6 +7,7 @@ import * as game from './electron/game';
 import * as hook from './electron/hook';
 import * as log from './electron/log';
 import * as robot from './electron/robot';
+import * as frame from './electron/frame';
 import { State } from './electron/state';
 
 if (!app.requestSingleInstanceLock()) {
@@ -100,8 +101,8 @@ update.register(ipcMain, (event, autoDownload) => {
 robot.register(ipcMain);
 
 game.register(ipcMain, poe => {
-    // send('game-active-change', serve ? true : poe.active);
-    send('game-active-change', poe.active);
+    send('game-active-change', serve ? true : poe.active);
+    // send('game-active-change', poe.active);
 
     if (win) {
         if (poe.active) {
@@ -248,6 +249,8 @@ function loadApp(self: BrowserWindow, route: string = '') {
         self.webContents.openDevTools({ mode: 'undocked' });
     }
 }
+
+frame.register(ipcMain, (frame, route) => loadApp(frame, route))
 
 /* tray */
 

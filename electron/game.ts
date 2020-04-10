@@ -59,27 +59,20 @@ export class Game {
 export function register(ipcMain: IpcMain, onUpdate: (game: Game) => void): void {
     const game = new Game();
 
-    let timeout = undefined;
-    const callback = () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            onUpdate(game);
-        }, game.active ? 300 : 0);
-    };
-
     ipcMain.on('game-focus', event => {
+        console.log('focus');
         game.focus();
         event.returnValue = true;
     });
 
     ipcMain.on('game-send-active-change', event => {
-        callback();
+        onUpdate(game);
         event.returnValue = true;
     });
 
     setInterval(() => {
         if (game.update()) {
-            callback();
+            onUpdate(game);
         }
     }, 500);
 }

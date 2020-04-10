@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FrameService } from '@app/service';
 import { DialogService } from '@app/service/dialog';
 import { Point } from '@app/type';
 import { StatsService } from '@shared/module/poe/service';
@@ -21,6 +22,7 @@ const DIALOG_AVG_VALUE_WIDTH = 36;
 export class EvaluateDialogService {
     constructor(
         private readonly dialog: DialogService,
+        private readonly frame: FrameService,
         private readonly stats: StatsService) {
     }
 
@@ -31,12 +33,16 @@ export class EvaluateDialogService {
             item,
             settings,
             language,
+            name: 'evaluate',
+            width,
+            height
         };
 
         const position = settings.dialogSpawnPosition === DialogSpawnPosition.Cursor ? point : undefined;
-        return this.dialog.open(EvaluateDialogComponent, data, {
-            position, width, height
-        });
+        return this.frame.open(data);
+        // return this.dialog.open(EvaluateDialogComponent, data, {
+        //     position, width, height
+        // });
     }
 
     private estimateBounds(item: Item, settings: EvaluateUserSettings, language: Language): { width: number, height: number } {
@@ -157,8 +163,8 @@ export class EvaluateDialogService {
         }
 
         return {
-            width: Math.max(width, DIALOG_MIN_WIDTH),
-            height
+            width: Math.max(Math.round(width), DIALOG_MIN_WIDTH),
+            height: Math.round(height)
         };
     }
 }

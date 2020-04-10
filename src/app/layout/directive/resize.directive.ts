@@ -14,7 +14,10 @@ export class ResizeDirective implements OnInit, OnDestroy {
     this.observer = new ResizeObserver(() => {
       this.ngZone.run(() => {
         const { offsetWidth, offsetHeight } = this.elementRef.nativeElement;
-        this.window.setSize(offsetWidth, offsetHeight);
+        const { clientWidth, clientHeight } = this.elementRef.nativeElement;
+        console.log(clientWidth, offsetWidth)
+        console.log(clientHeight, offsetHeight)
+        this.window.setSize(offsetWidth, offsetHeight + 30);
       });
     });
   }

@@ -1,0 +1,4 @@
+<!-- todo move dialog to here later on -->
+<ng-container *ngIf="data$ | async as data">
+    <app-evaluate-dialog [data]="data" (close)="onClose($event)"></app-evaluate-dialog>
+</ng-container>

@@ -5,15 +5,9 @@ import { Language } from '@shared/module/poe/type';
 import { ItemSearchIndexed } from '@shared/module/poe/type/search.type';
 import { SharedModule } from '@shared/shared.module';
 import { UserSettingsFeature } from 'src/app/layout/type';
-import { EvaluateDialogComponent } from './component/evaluate-dialog/evaluate-dialog.component';
-import { EvaluateExchangeRateChartComponent } from './component/evaluate-exchange-rate-chart/evaluate-exchange-rate-chart.component';
-import { EvaluateExchangeRateComponent } from './component/evaluate-exchange-rate/evaluate-exchange-rate.component';
-import { EvaluateOptionsComponent } from './component/evaluate-options/evaluate-options.component';
-import { EvaluateSearchChartComponent } from './component/evaluate-search-chart/evaluate-search-chart.component';
-import { EvaluateSearchTableComponent } from './component/evaluate-search-table/evaluate-search-table.component';
-import { EvaluateSearchComponent } from './component/evaluate-search/evaluate-search.component';
-import { EvaluateResultView, EvaluateSettingsComponent, EvaluateUserSettings } from './component/evaluate-settings/evaluate-settings.component';
+import { EvaluateDialogComponent, EvaluateExchangeRateChartComponent, EvaluateExchangeRateComponent, EvaluateOptionsComponent, EvaluateResultView, EvaluateSearchChartComponent, EvaluateSearchComponent, EvaluateSearchTableComponent, EvaluateSettingsComponent, EvaluateUserSettings } from './component';
 import { EvaluateService } from './service/evaluate.service';
+import { EvaluateFrameComponent } from './page/evaluate-frame/evaluate-frame.component';
 
 @NgModule({
     providers: [{ provide: FEATURE_MODULES, useClass: EvaluateModule, multi: true }],
@@ -25,7 +19,8 @@ import { EvaluateService } from './service/evaluate.service';
         EvaluateExchangeRateComponent,
         EvaluateSearchComponent,
         EvaluateSearchTableComponent,
-        EvaluateOptionsComponent
+        EvaluateOptionsComponent,
+        EvaluateFrameComponent
     ],
     imports: [SharedModule]
 })

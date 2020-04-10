@@ -58,23 +58,23 @@ export class OverlayComponent implements OnInit, OnDestroy {
       this.translate.use(settings.uiLanguage);
       this.displayVersion$.next(settings.displayVersion);
       this.window.setZoom(settings.zoom / 100);
-      this.context.init(this.getContext(settings));
+      this.context.init(this.getContext(settings)).subscribe(() => {
+        this.registerEvents(settings);
+        this.register(settings);
+        this.registerVisibleChange();
 
-      this.registerEvents(settings);
-      this.register(settings);
-      this.registerVisibleChange();
-
-      this.renderer.on('show-user-settings').subscribe(() => {
-        this.openUserSettings();
-      });
-      this.renderer.on('reset-zoom').subscribe(() => {
-        this.userSettingsService.update(x => {
-          x.zoom = 100;
-          return x;
-        }).subscribe(x => {
-          this.window.setZoom(x.zoom / 100);
+        this.renderer.on('show-user-settings').subscribe(() => {
+          this.openUserSettings();
         });
-      })
+        this.renderer.on('reset-zoom').subscribe(() => {
+          this.userSettingsService.update(x => {
+            x.zoom = 100;
+            return x;
+          }).subscribe(x => {
+            this.window.setZoom(x.zoom / 100);
+          });
+        })
+      });
     });
   }
 
