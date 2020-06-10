@@ -21,7 +21,7 @@ PoE Overlay is a tool for Path of Exile. The ***core aspect*** is to blend in wi
 ## Community Development
 
 This version of PoE Overlay was forked on 2020-06-10 to snapshot the app before it was
-converted to run inside Overwolf.
+converted to closed source.
 
 In order to avoid version confusion with the official version, we should do the following:
 
