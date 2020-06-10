@@ -27,16 +27,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kyusung4698/PoE-Overlay.git"
+    "url": "git+https://github.com/ijemafe/PoE-Overlay.git"
   },
   "author": {
     "name": "Kyusung4698",
     "email": "kyusung4698@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/Kyusung4698/PoE-Overlay/issues"
+    "url": "https://github.com/ijemafe/PoE-Overlay/issues"
   },
-  "homepage": "https://github.com/Kyusung4698/PoE-Overlay",
+  "homepage": "https://github.com/ijemafe/PoE-Overlay",
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.900.7",
     "@angular/cli": "^9.1.3",

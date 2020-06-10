@@ -150,7 +150,7 @@ function showChangelog() {
         parent: win,
     });
     changelog.removeMenu();
-    changelog.loadURL('https://github.com/Kyusung4698/PoE-Overlay/blob/master/CHANGELOG.md#Changelog');
+    changelog.loadURL('https://github.com/ijemafe/PoE-Overlay/blob/master/CHANGELOG.md#Changelog');
 }
 
 /* main window */

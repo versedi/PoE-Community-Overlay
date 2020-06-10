@@ -367,7 +367,7 @@
 
 - added kakao client support (#181)
 - added essence support (#180)
-- added [project wiki](https://github.com/Kyusung4698/PoE-Overlay/wiki) to faq
+- added project wiki to faq
 - increase keyboard delay (#177)
 - removed `restore focus` (#177)
 - fixed `herald of thunder` wrong item category (#176)

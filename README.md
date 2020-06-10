@@ -50,7 +50,7 @@ In order to avoid version confusion with the official version, we should do the 
 * Menu:
     * an in game menu to change all settings<br> <details>![menu](img/menu_0.5.2.jpg)</details>
     
-See the [Wiki](https://github.com/Kyusung4698/PoE-Overlay/wiki) for further details.
+See the [Wiki](https://github.com/ijemafe/PoE-Overlay/wiki) for further details.
 
 ## Roadmap
 
@@ -79,7 +79,7 @@ These instructions will set you up to run and enjoy the overlay.
 
 #### Installing
 
-1. Head over to [Releases](https://github.com/Kyusung4698/PoE-Overlay/releases) and download one of the following files
+1. Head over to [Releases](https://github.com/ijemafe/PoE-Overlay/releases) and download one of the following files
     1. `poe-overlay-Setup-0.6.28.exe` to install locally. This supports auto update/ auto launch.
     2. `poe-overlay-0.6.28.exe` portable version. This does not support auto update/ auto launch.
 2. Run either of your downloaded file
@@ -184,13 +184,13 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ### Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/Kyusung4698/PoE-Overlay/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ijemafe/PoE-Overlay/tags). 
 
 ## Authors
 
 * **Nicklas Ronge** - *Initial work* - [Kyusung4698](https://github.com/Kyusung4698)
 
-See also the list of [contributors](https://github.com/Kyusung4698/PoE-Overlay/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ijemafe/PoE-Overlay/contributors) who participated in this project.
 
 ## License
 

@@ -36,7 +36,7 @@ export class BookmarkSettingsComponent implements UserSettingsComponent {
 
   private addBookmark(): void {
     this.settings.bookmarks.push({
-      url: 'https://github.com/Kyusung4698/PoE-Overlay',
+      url: 'https://github.com/ijemafe/PoE-Overlay',
       shortcut: undefined,
       external: false
     });
