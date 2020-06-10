@@ -1,6 +1,6 @@
-owner: Kyusung4698
+owner: ijemafe
 repo: PoE-Overlay
 provider: github
 updaterCacheDirName: poe-overlay-updater
 publisherName:
-  - Nicklas Ronge
+  - ijemafe
