@@ -1,6 +1,7 @@
 # PoE Overlay (Community Fork)
 
 PoE Overlay is a tool for Path of Exile. The ***core aspect*** is to blend in with the game. Built with Electron and Angular.
+No Overwolf, no tracking, no shit. Everyone can commit and is free to fork and built uppon. 
 
 <!-- TOC -->
 - [Community Development](#community-development)
