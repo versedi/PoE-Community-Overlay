@@ -3,14 +3,12 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/Kyusung4698/PoE-Overlay)
 <a href="https://www.patreon.com/bePatron?u=30666721"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron" width="85px" height="20px"></a>
 
-# PoE Overlay 0.6.28 (Fork)
+# PoE Overlay (Community Fork)
 
-An Overlay for Path of Exile. The ***core aspect*** is to blend in with the game. Built with Electron and Angular.
+PoE Overlay is a tool for Path of Exile. The ***core aspect*** is to blend in with the game. Built with Electron and Angular.
 
-Note: This version was forked on 2020-06-10 to snapshot the app before it was
-converted to run inside Overwolf.
- 
 <!-- TOC -->
+- [Community Development](#community-development)
 - [Features](#features)
 - [Roadmap](#roadmap)
 - [Enduser](#enduser)
@@ -19,6 +17,17 @@ converted to run inside Overwolf.
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 <!-- /TOC -->
+
+## Community Development
+
+This version of PoE Overlay was forked on 2020-06-10 to snapshot the app before it was
+converted to run inside Overwolf.
+
+In order to avoid version confusion with the official version, we should do the following:
+
+1. Any changes from the point of divergence should begin with version v0.7.0
+2. Major releases may continue to v0.10.0 and beyond
+3. Version should never reach or exceed v1.0.0 to avoid conflicts
 
 ## Features
 
