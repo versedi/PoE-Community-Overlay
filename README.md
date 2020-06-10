@@ -3,9 +3,12 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/Kyusung4698/PoE-Overlay)
 <a href="https://www.patreon.com/bePatron?u=30666721"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron" width="85px" height="20px"></a>
 
-# PoE Overlay 0.6.28
+# PoE Overlay 0.6.28 (Fork)
 
-An Overlay for Path of Exile. The ***core aspect*** is to blend in with the game. Built with Electron and Angular. 
+An Overlay for Path of Exile. The ***core aspect*** is to blend in with the game. Built with Electron and Angular.
+
+Note: This version was forked on 2020-06-10 to snapshot the app before it was
+converted to run inside Overwolf.
  
 <!-- TOC -->
 - [Features](#features)
@@ -51,7 +54,6 @@ See the [Wiki](https://github.com/Kyusung4698/PoE-Overlay/wiki) for further deta
 | ------------- |-------------: | ------- |
 | Linux         | 50%           | - Allow running this app on Linux
 | Trade         | 0%            | - Send messages<br>- Trade UI<br>- etc.
-| Overwolf      | 0%            | - Release this app as Overwolf addon to support a fullscreen experience
 
 ## Enduser
 
