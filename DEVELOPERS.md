@@ -4,6 +4,9 @@
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+First, join the [Developer Discord](https://discord.gg/jqupUW). There are channels
+here for both end users and developers. We can help you get set up.
+
 ## Prerequisites
 
 Your editor of choice for a node project - like [vscode](https://code.visualstudio.com/).
@@ -57,6 +60,9 @@ npm run electron:windows
 # ng build -c production           # Build Angular app
 # electron-builder build --windows # Create Windows EXE with Electron
 ```
+
+When you reach this point, you've finished the developer setup! Let us know on
+Discord and we'll give you a role to chat in developer channels.
 
 ## Built With
 
