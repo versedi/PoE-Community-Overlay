@@ -1,6 +1,6 @@
-owner: ijemafe
-repo: PoE-Overlay
+owner: PoE-Overlay-Community
+repo: PoE-Overlay-Community-Fork
 provider: github
 updaterCacheDirName: poe-overlay-updater
 publisherName:
-  - ijemafe
+  - PoE-Overlay-Community
