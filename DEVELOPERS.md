@@ -23,9 +23,9 @@ npm install --global --production windows-build-tools
 ## Installing
 
 1. Clone the repository.
-2. Open up the folder with your editor.
-3. Run `npm install` to install all required npm packages.
-4. Run `npm run electron:rebuild` to generate a executable [robotjs](https://github.com/octalmage/robotjs) version.
+1. Open up the folder with your editor.
+1. Run `npm install` to install all required npm packages.
+1. Run `npm run electron:rebuild` to generate a executable [robotjs](https://github.com/octalmage/robotjs) version.
 
 That's it. Your Project should now be ready to run:
 
@@ -80,5 +80,5 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 In order to avoid version confusion with the official version, we should do the following:
 
 1. Any changes from the point of divergence should begin with version v0.7.0
-2. Major releases may continue to v0.10.0 and beyond
-3. Version should never reach or exceed v1.0.0 to avoid conflicts
+1. Major releases may continue to v0.10.0 and beyond
+1. Version should never reach or exceed v1.0.0 to avoid conflicts
