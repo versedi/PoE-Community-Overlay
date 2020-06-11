@@ -139,6 +139,16 @@ Then you need to install the [windows-build-tools](https://github.com/felixriese
 npm install --global --production windows-build-tools
 ```
 
+A TypeScript compiler:
+```
+npm install -g typescript
+```
+
+And the Angular CLI:
+```
+npm install -g @angular/cli
+```
+
 #### Installing
 
 1. Clone the repository. 
@@ -171,6 +181,10 @@ npm run ng:lint
 A electron executable can be generate by calling:
 ```
 npm run electron:windows
+# Under the hood:
+# tsc -p tsconfig.serve.json       # Compile Typescript
+# ng build -c production           # Build Angular app
+# electron-builder build --windows # Create Windows EXE with Electron
 ```
 
 ### Built With
