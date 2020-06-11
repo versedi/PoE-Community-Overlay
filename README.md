@@ -135,7 +135,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 Your editor of choice for a node project - like [vscode](https://code.visualstudio.com/).
 
-The first thing to install is [nodejs](https://nodejs.org/en/). Download your matching executable and follow the instructions.
+The first thing to install is [nodejs](https://nodejs.org/en/). Download your matching executable (**be sure to get the 64-bit version**) and follow the instructions.
 
 Then you need to install the [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) from an elevated PowerShell or CMD.exe. This may take a while (10-15min).
 
