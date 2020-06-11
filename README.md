@@ -135,18 +135,9 @@ Your editor of choice for a node project - like [vscode](https://code.visualstud
 The first thing to install is [nodejs](https://nodejs.org/en/). Download your matching executable and follow the instructions.
 
 Then you need to install the [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) from an elevated PowerShell or CMD.exe. This may take a while (10-15min).
+
 ```
 npm install --global --production windows-build-tools
-```
-
-A TypeScript compiler:
-```
-npm install -g typescript
-```
-
-And the Angular CLI:
-```
-npm install -g @angular/cli
 ```
 
 #### Installing
