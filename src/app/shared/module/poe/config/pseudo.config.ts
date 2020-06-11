@@ -1,22 +1,22 @@
-import { Item, ItemQualityType } from '../type';
+import { Item, ItemQualityType } from '../type'
 
 export enum ModifierType {
-    Addition,
-    Addition5Every10,
-    Addition1Every2,
-    MinimumRequired,
+  Addition,
+  Addition5Every10,
+  Addition1Every2,
+  MinimumRequired,
 }
 
 export interface Modifier {
-    id: string;
-    type: ModifierType;
-    count?: number;
+  id: string
+  type: ModifierType
+  count?: number
 }
 
 export interface PseudoModifier {
-    mods?: Modifier[];
-    prop?: (item: Item) => string;
-    count?: number;
+  mods?: Modifier[]
+  prop?: (item: Item) => string
+  count?: number
 }
 
 /* tslint:disable */
