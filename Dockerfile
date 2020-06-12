@@ -38,9 +38,7 @@ RUN npm install
 
 # Build the app.
 # If you get an out of memory error, increase Docker's resources.
-RUN mkdir -p $codedir/release 
-RUN echo 'hi' > $codedir/release/test
-RUN ls $codedir/release
+RUN mkdir -p $codedir/release
 RUN npm run electron:linux
 
 # Export the build from the container to the 'release' folder on your PC.
