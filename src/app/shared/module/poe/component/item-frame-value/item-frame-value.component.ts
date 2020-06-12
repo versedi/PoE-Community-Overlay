@@ -61,9 +61,9 @@ export class ItemFrameValueComponent implements OnInit {
     event.stopImmediatePropagation()
     /* tslint:disable */
     if (event.which === 2) {
-      this.resetValue(min, max);
+      this.resetValue(min, max)
     } else if (event.which === 3) {
-      this.toggleValue(min, max);
+      this.toggleValue(min, max)
     }
     /* tslint:enable */
   }

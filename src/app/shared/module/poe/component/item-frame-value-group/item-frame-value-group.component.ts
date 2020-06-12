@@ -31,9 +31,9 @@ export class ItemFrameValueGroupComponent implements AfterViewInit {
     event.stopImmediatePropagation()
     /* tslint:disable */
     if (event.which === 2) {
-      this.children.forEach(x => x.resetValue(true, true));
+      this.children.forEach((x) => x.resetValue(true, true))
     } else if (event.which === 3) {
-      this.children.forEach(x => x.toggleValue(true, true));
+      this.children.forEach((x) => x.toggleValue(true, true))
     }
     /* tslint:enable */
   }
