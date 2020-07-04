@@ -1,0 +1,60 @@
+.tile {
+    height: 90px;
+    width: 95px;
+    background-color: white;
+    position: relative;
+    border-radius: 3px;
+    border: 4px solid gray;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.item-name{
+    display: flex;
+    justify-content: center;
+    background-color: gray;
+    color:white;
+    padding: 2px;
+    font-size:12px
+}
+
+.price-value{
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.price{
+    display: flex;
+    justify-content: center;
+}
+
+.buyer-name{
+    display: flex;
+    justify-content: center;
+}
+
+.floating-buttons{
+    position: absolute;
+    top: -48px;
+    left:-60%;
+    display: flex;
+    justify-content: center;
+    width: 200px;
+}
+
+.green {
+    background-color: green;
+    color:white;
+}
+
+.btn-floating{
+    margin-left:3px;
+    margin-right: 3px
+}
+
+.buyer-joined-icon{
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
