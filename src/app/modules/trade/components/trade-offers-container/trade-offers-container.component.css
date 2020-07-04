@@ -1,0 +1,6 @@
+.offers{
+    pointer-events: none;
+    font-size: 8;
+    display:flex;
+    justify-content: center;
+}
