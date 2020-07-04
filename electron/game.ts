@@ -23,21 +23,30 @@ const POE_TITLES = ['Path of Exile']
 const POE_ALTERNATIVE_TITLES = ['Path of Exile <---> ']
 
 export class Game {
-  private window: Window
+  private window: Window;
+  private windowPath: string;
 
   public active?: boolean
   public bounds?: Rectangle
+
+  private ipcMain: IpcMain;
+
+  constructor(ipcMain:IpcMain){
+    this.ipcMain = ipcMain;
+  }
 
   public async update(): Promise<boolean> {
     const old = this.toString()
 
     const window = await getActiveWindow()
     if (window) {
-      const windowPath = (window.path || '').toLowerCase()
+      const windowPath = (window.path || '').toLowerCase();
       const name = path.basename(windowPath)
       if (POE_NAMES.includes(name)) {
         const title = window.title()
         if (POE_TITLES.includes(title) || POE_ALTERNATIVE_TITLES.some((x) => title.startsWith(x))) {
+        this.ipcMain.emit('logs-file-found', `${windowPath.substring(0, windowPath.lastIndexOf('\\'))}\\logs\\Client.txt`);
+
           this.window = window
           this.active = true
           this.bounds = window.bounds()
@@ -69,7 +78,7 @@ export class Game {
 }
 
 export function register(ipcMain: IpcMain, onUpdate: (game: Game) => void): void {
-  const game = new Game()
+  const game = new Game(ipcMain)
 
   ipcMain.on('game-focus', (event) => {
     game.focus()
@@ -79,7 +88,7 @@ export function register(ipcMain: IpcMain, onUpdate: (game: Game) => void): void
   ipcMain.on('game-send-active-change', (event) => {
     onUpdate(game)
     event.returnValue = true
-  })
+  });
 
   setInterval(async () => {
     if (await game.update()) {
