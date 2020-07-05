@@ -5,20 +5,47 @@ import { TradeOffersContainerComponent } from './components/trade-offers-contain
 import { FeatureModule, Feature } from '@app/type'
 import { UserSettingsFeature, UserSettings } from 'src/app/layout/type'
 import { TradeOfferComponent } from './components/trade-offer/trade-offer.component'
+import {
+  TradeSettingsComponent,
+  TradeUserSettings,
+} from './components/trade-settings/trade-settings.component'
 
 @NgModule({
   providers: [{ provide: FEATURE_MODULES, useClass: TradeModule, multi: true }],
-  declarations: [TradeOfferComponent, TradeOffersContainerComponent],
+  declarations: [TradeOfferComponent, TradeOffersContainerComponent, TradeSettingsComponent],
   exports: [TradeOfferComponent, TradeOffersContainerComponent],
   imports: [SharedModule],
 })
 export class TradeModule implements FeatureModule {
   constructor() {}
-  public getSettings(): any {
-    return {}
+
+  public getSettings(): UserSettingsFeature {
+    const defaultSettings: TradeUserSettings = {
+      tradeThanksWhisper: 'Thanks!',
+      tradeBusyWhisper: "I'm busy right now, but I will send you a party invite when I'm ready",
+      tradeSoldWhisper: 'Sorry, my {item} is sold',
+      tradeStillInterestedWhisper: 'Are you still interested in my {item} listed for {price}?',
+      tradeAutoKick: true,
+      tradeAutoWhisper: true,
+    }
+
+    return {
+      name: 'Trade manager',
+      component: TradeSettingsComponent,
+      defaultSettings,
+    }
   }
-  public getFeatures(settings: UserSettings): Feature[] {
-    return []
+
+  public getFeatures(settings: TradeUserSettings): Feature[] {
+    const features: Feature[] = []
+
+    return features
   }
-  public run(feature: string, settings: UserSettings): void {}
+
+  public run(feature: string, settings: TradeUserSettings): void {
+    switch (feature) {
+      default:
+        break
+    }
+  }
 }

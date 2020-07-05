@@ -9,6 +9,9 @@ import {
 import Offer from '@modules/trade/class/Offer'
 import { TradeService } from '@modules/trade/services/trade.service'
 import { GameService } from '@app/service'
+import { UserSettingsService } from 'src/app/layout/service'
+import { TradeUserSettings } from '../trade-settings/trade-settings.component'
+import { UserSettings } from 'src/app/layout/type'
 
 @Component({
   selector: 'app-trade-offers-container',
@@ -18,11 +21,13 @@ import { GameService } from '@app/service'
 })
 export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   public offers: Offer[] = []
+  private settings: TradeUserSettings
 
   constructor(
     private cd: ChangeDetectorRef,
     private tradeService: TradeService,
-    private gameService: GameService
+    private gameService: GameService,
+    private settingsService: UserSettingsService
   ) {
     this.tradeService.offers.subscribe(this.handleNewOffer.bind(this))
     this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this))
@@ -37,11 +42,20 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     const index = this.offers.findIndex((o) => o.tradeRequestSent)
 
     if (index !== -1) {
-      this.sendThanksWhisper(this.offers[index])
-      this.kickBuyer(this.offers[index].buyerName)
+      this.settingsService.get().subscribe((settings) => {
+        const tradeSettings = settings as TradeUserSettings
 
-      this.offers.splice(index, 1)
-      this.cd.detectChanges()
+        if (tradeSettings.tradeAutoWhisper) {
+          this.sendThanksWhisper(this.offers[index])
+        }
+
+        if (tradeSettings.tradeAutoKick) {
+          this.kickBuyer(this.offers[index].buyerName)
+        }
+
+        this.offers.splice(index, 1)
+        this.cd.detectChanges()
+      })
     }
   }
 
@@ -97,29 +111,67 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     this.gameService.sendCommand(`/kick ${name}`)
   }
 
+  private insertWhisperVars(text: string, offer: Offer): string {
+    return text
+      .replace('{item}', offer.itemName)
+      .replace('{price}', `${offer.price.value} ${offer.price.currency}`)
+  }
+
   public sendThanksWhisper(offer: Offer): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(`@${offer.buyerName} Thanks!`)
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
+      this.gameService.focus()
+      this.gameService.sendCommand(
+        `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
+            : 'Thanks!'
+        }`
+      )
+    })
   }
 
   public sendStillInterestedWhisper(offer: Offer): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(
-      `@${offer.buyerName} Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
-    )
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
+      this.gameService.focus()
+      this.gameService.sendCommand(
+        `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
+            : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
+        }`
+      )
+    })
   }
 
   public sendBusyWhisper(offer: Offer): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(
-      `@${offer.buyerName} I'm busy right now, I will send you party invite when I'm ready.`
-    )
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
+      this.gameService.focus()
+      this.gameService.sendCommand(
+        `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
+            : `I'm busy right now, I will send you party invite when I'm ready.`
+        }`
+      )
+    })
   }
 
   public sendSoldWhisper(offer: Offer): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(`@${offer.buyerName} Sorry, my ${offer.itemName} is already sold.`)
-    this.ignoreOffer(offer)
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
+      this.gameService.focus()
+      this.gameService.sendCommand(
+        `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
+            : `Sorry, my ${offer.itemName} is already sold.`
+        }`
+      )
+      this.ignoreOffer(offer)
+    })
   }
 
   public sendTradeRequest(offer: Offer): void {

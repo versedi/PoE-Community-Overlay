@@ -1,0 +1,55 @@
+<app-card [title]="'Actions' | translate">
+    <div class="row">
+        <div class="col">
+            <mat-slide-toggle [checked]="settings.tradeAutoKick" (change)="settings.tradeAutoKick = $event.checked">
+                {{ 'Auto-Kick' | translate }}
+            </mat-slide-toggle>
+        </div>
+        <div class="col">
+            <mat-slide-toggle [checked]="settings.tradeAutoWhisper"
+                (change)="settings.tradeAutoWhisper = $event.checked">
+                {{ 'Auto-Whisper' | translate }}
+            </mat-slide-toggle>
+        </div>
+    </div>
+</app-card>
+
+<app-card [title]="'Whispers' | translate">
+    <div class="row">
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeThanksWhisper', '{item}')">Item name</button>
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeThanksWhisper', '{price}')">Price</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Thanks whisper</mat-label>
+                <input matInput placeholder="Thanks!" [(ngModel)]="settings.tradeThanksWhisper">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeSoldWhisper', '{item}')">Item name</button>
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeSoldWhisper', '{price}')">Price</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Sold whisper</mat-label>
+                <input matInput placeholder="Sold!" [(ngModel)]="settings.tradeSoldWhisper">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeBusyWhisper', '{item}')">Item name</button>
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeBusyWhisper', '{price}')">Price</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Busy whisper</mat-label>
+                <input matInput placeholder="I'm busy!" [(ngModel)]="settings.tradeBusyWhisper">
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeStillInterestedWhisper', '{item}')">Item name</button>
+            <button mat-raised-button color="primary" (click)="addToWhisper('tradeStillInterestedWhisper', '{price}')">Price</button>
+            <mat-form-field appearance="fill">
+                <mat-label>Still interested whisper</mat-label>
+                <input matInput placeholder="Are you still interested?"
+                    [(ngModel)]="settings.tradeStillInterestedWhisper">
+            </mat-form-field>
+        </div>
+    </div>
+</app-card>
