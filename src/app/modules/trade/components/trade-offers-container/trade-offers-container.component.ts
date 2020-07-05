@@ -41,14 +41,14 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
             this.kickBuyer(this.offers[index].buyerName);
 
             this.offers.splice(index, 1);
-            this.cd.markForCheck();
+            this.cd.detectChanges();
         }
     }
 
     private handleNewOffer(offer: Offer): void {
         if (offer) {
             this.offers.push(offer);
-            this.cd.markForCheck();
+            this.cd.detectChanges();
         }
     }
 
@@ -69,7 +69,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
         if (index != -1) {
             this.offers.splice(index, 1);
-            this.cd.markForCheck();
+            this.cd.detectChanges();
         }
     }
 
@@ -78,7 +78,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
         if (index != -1) {
             this.offers.splice(index, 1);
-            this.cd.markForCheck();
+            this.cd.detectChanges();
         }
     }
 
@@ -131,6 +131,6 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
         this.gameService.focus();
         this.gameService.sendCommand(`/invite ${offer.buyerName}`);
         offer.partyInviteSent = true;
-        this.cd.markForCheck();
+        this.cd.detectChanges();
     }
 }

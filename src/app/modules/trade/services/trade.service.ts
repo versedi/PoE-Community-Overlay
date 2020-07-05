@@ -26,7 +26,6 @@ export class TradeService {
 
     private Init(): void {
         this.ipcRenderer.on('new-trade-offer', (event, offer) => {
-            console.log('service offer', offer);
             this.offers.next(offer);
         });
 

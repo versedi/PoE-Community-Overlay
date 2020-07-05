@@ -59,18 +59,12 @@ export class TradeOfferComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tradeService.buyer.subscribe(this.handleBuyerJoined.bind(this));
     }
 
-
-    setDisabledState?(isDisabled: boolean): void {
-        throw new Error("Method not implemented.");
-    }
-
     private handleBuyerJoined(name: string): void {
         if (this.offer && this.offer.buyerName == name) {
             this.offer.buyerJoined = true;
-            this.cd.markForCheck();
+            this.cd.detectChanges();
         }
     }
-
 
     public ngOnInit(): void {
     }
