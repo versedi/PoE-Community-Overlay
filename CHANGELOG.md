@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.3 (2020-07-04)
+- Added trade manager
+
 ## 0.7.1 (2020-06-16) 
 - Added support for linux users
 - Updated Settings for better User experience
