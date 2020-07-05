@@ -44,8 +44,8 @@ const routes: Routes = [
     MapModule,
     MiscModule,
     BookmarkModule,
-    TradeModule
+    TradeModule,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

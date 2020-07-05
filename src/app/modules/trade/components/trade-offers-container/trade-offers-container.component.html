@@ -1,16 +1,16 @@
 <div class="offers">
   <ng-container *ngFor="let offer of offers; let i = index">
     <app-trade-offer 
-    (onIgnoreOffer)="ignoreOffer(offer)" 
-    (onTradeRequest)="sendTradeRequest(offer)"
-    (onTradeAccepted)="removeAcceptedTradeOffer()"
-    (onTradeCancelled)="resetOfferTrades()"
-    (onPartyInvite)="sendPartyInvite(offer)"
-    (onPartyKick)="kickBuyer(offer.buyerName)"
-    (onRemoveOffer)="removeOffer(offer)"
-    (onStillInterestedWhisper)="sendStillInterestedWhisper(offer)"
-    (onBusyWhisper)="sendBusyWhisper(offer)"
-    (onSoldWhisper)="sendSoldWhisper(offer)"
+    (evIgnoreOffer)="ignoreOffer(offer)" 
+    (evTradeRequest)="sendTradeRequest(offer)"
+    (evTradeAccepted)="removeAcceptedTradeOffer()"
+    (evTradeCancelled)="resetOfferTrades()"
+    (evPartyInvite)="sendPartyInvite(offer)"
+    (evPartyKick)="kickBuyer(offer.buyerName)"
+    (evRemoveOffer)="removeOffer(offer)"
+    (evStillInterestedWhisper)="sendStillInterestedWhisper(offer)"
+    (evBusyWhisper)="sendBusyWhisper(offer)"
+    (evSoldWhisper)="sendSoldWhisper(offer)"
     [offer]="offer" 
     *ngIf="i < 8"></app-trade-offer>
   </ng-container>

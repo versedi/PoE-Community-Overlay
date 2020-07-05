@@ -40,7 +40,7 @@ export class ItemParserService {
       itemSectionItemLevelParserService,
       itemSectionSocketsParserService,
       itemSectionPropertiesParserService,
-      itemSectionFlaskParserService,        // Properties have to be parsed first in case the Flask contains Quality.
+      itemSectionFlaskParserService, // Properties have to be parsed first in case the Flask contains Quality.
       itemSectionCorruptedParserService,
       itemSectionVeiledParserService,
       itemSectionInfluencesParserService,

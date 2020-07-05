@@ -6,27 +6,19 @@ import { FeatureModule, Feature } from '@app/type'
 import { UserSettingsFeature, UserSettings } from 'src/app/layout/type'
 import { TradeOfferComponent } from './components/trade-offer/trade-offer.component'
 
-
 @NgModule({
-    providers: [{ provide: FEATURE_MODULES, useClass: TradeModule, multi: true }],
-    declarations: [
-        TradeOfferComponent,
-        TradeOffersContainerComponent,
-    ],
-    exports: [
-        TradeOfferComponent,
-        TradeOffersContainerComponent,
-    ],
-    imports: [SharedModule],
+  providers: [{ provide: FEATURE_MODULES, useClass: TradeModule, multi: true }],
+  declarations: [TradeOfferComponent, TradeOffersContainerComponent],
+  exports: [TradeOfferComponent, TradeOffersContainerComponent],
+  imports: [SharedModule],
 })
 export class TradeModule implements FeatureModule {
-    constructor() { }
-    getSettings(): any {
-        return {}
-    }
-    getFeatures(settings: UserSettings): Feature[] {
-        return [];
-    }
-    run(feature: string, settings: UserSettings): void {
-    }
+  constructor() {}
+  public getSettings(): any {
+    return {}
+  }
+  public getFeatures(settings: UserSettings): Feature[] {
+    return []
+  }
+  public run(feature: string, settings: UserSettings): void {}
 }

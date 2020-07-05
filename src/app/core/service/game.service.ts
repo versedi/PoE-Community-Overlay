@@ -26,7 +26,7 @@ export class GameService {
     this.window.setVisibleOnAllWorkspaces(true)
   }
 
-  public sendCommand(command:string):void{
-    this.ipcRenderer.sendSync('game-send-command', command);
+  public sendCommand(command: string): void {
+    this.ipcRenderer.sendSync('game-send-command', command)
   }
 }
