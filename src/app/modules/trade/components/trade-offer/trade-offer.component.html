@@ -1,6 +1,6 @@
 <div class="tile" [class.currentOffer]="buyerInvited" (mouseenter)="showFloatingButtonsContainer(true)" (mouseleave)="showFloatingButtonsContainer(false)">
     <div class="floating-buttons" (mouseenter)="showFloatingButtonsContainer(true)"
-        (mouseleave)="showFloatingButtonsContainer(false)" *ngIf="showFloatingButtonsContainer">
+        (mouseleave)="showFloatingButtonsContainer(false)" *ngIf="showFloatingButtons">
         <!-- Don't use tooltips! These will trigger the mouse leave/enter events -->
         <ng-container *ngIf="!offer.partyInviteSent">
             <button mat-mini-fab *ngFor="let btn of preInviteFloatingButtons" [color]="btn.color" class="btn-floating"

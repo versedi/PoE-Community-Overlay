@@ -114,7 +114,7 @@ export class TradeOfferComponent implements OnInit, AfterViewInit, OnDestroy {
     showFloatingButtonsContainer(value: boolean): void {
         if (value) {
             this.showFloatingButtons = true;
-            this.cd.markForCheck();
+            this.cd.detectChanges();
 
             if (this.buttonTimeout) {
                 this.buttonTimeoutStarted = false;
@@ -126,7 +126,7 @@ export class TradeOfferComponent implements OnInit, AfterViewInit, OnDestroy {
 
                 this.buttonTimeout = setTimeout(() => {
                     this.showFloatingButtons = false;
-                    this.cd.markForCheck();
+                    this.cd.detectChanges();
                     this.buttonTimeoutStarted = false;
                 }, 500);
             }
