@@ -8,10 +8,9 @@ import {
 } from '@angular/core'
 import Offer from '@modules/trade/class/Offer'
 import { TradeService } from '@modules/trade/services/trade.service'
-import { GameService } from '@app/service'
 import { UserSettingsService } from 'src/app/layout/service'
 import { TradeUserSettings } from '../trade-settings/trade-settings.component'
-import { UserSettings } from 'src/app/layout/type'
+import { CommandService } from '@modules/command/service/command.service'
 
 @Component({
   selector: 'app-trade-offers-container',
@@ -21,13 +20,12 @@ import { UserSettings } from 'src/app/layout/type'
 })
 export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   public offers: Offer[] = []
-  private settings: TradeUserSettings
 
   constructor(
     private cd: ChangeDetectorRef,
     private tradeService: TradeService,
-    private gameService: GameService,
-    private settingsService: UserSettingsService
+    private settingsService: UserSettingsService,
+    private commandService: CommandService
   ) {
     this.tradeService.offers.subscribe(this.handleNewOffer.bind(this))
     this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this))
@@ -66,11 +64,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void { }
 
-  public ngAfterViewInit(): void {}
+  public ngAfterViewInit(): void { }
 
-  public ngOnDestroy(): void {}
+  public ngOnDestroy(): void { }
 
   public ignoreOffer(offer: Offer): void {
     const index: number = this.offers.findIndex(
@@ -107,8 +105,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   }
 
   public kickBuyer(name: string): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(`/kick ${name}`)
+    this.commandService.command(`/kick ${name}`)
   }
 
   private insertWhisperVars(text: string, offer: Offer): string {
@@ -120,12 +117,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public sendThanksWhisper(offer: Offer): void {
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
-      this.gameService.focus()
-      this.gameService.sendCommand(
+
+      this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
-            : 'Thanks!'
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
+          : 'Thanks!'
         }`
       )
     })
@@ -134,12 +131,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public sendStillInterestedWhisper(offer: Offer): void {
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
-      this.gameService.focus()
-      this.gameService.sendCommand(
+
+      this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
-            : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
+          : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
         }`
       )
     })
@@ -148,12 +145,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public sendBusyWhisper(offer: Offer): void {
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
-      this.gameService.focus()
-      this.gameService.sendCommand(
+
+      this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
-            : `I'm busy right now, I will send you party invite when I'm ready.`
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
+          : `I'm busy right now, I will send you party invite when I'm ready.`
         }`
       )
     })
@@ -162,12 +159,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public sendSoldWhisper(offer: Offer): void {
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
-      this.gameService.focus()
-      this.gameService.sendCommand(
+
+      this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
-            : `Sorry, my ${offer.itemName} is already sold.`
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
+          : `Sorry, my ${offer.itemName} is already sold.`
         }`
       )
       this.ignoreOffer(offer)
@@ -175,14 +172,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   }
 
   public sendTradeRequest(offer: Offer): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(`/tradewith ${offer.buyerName}`)
+    this.commandService.command(`/tradewith ${offer.buyerName}`)
     offer.tradeRequestSent = true
   }
 
   public sendPartyInvite(offer: Offer): void {
-    this.gameService.focus()
-    this.gameService.sendCommand(`/invite ${offer.buyerName}`)
+    this.commandService.command(`/invite ${offer.buyerName}`)
     offer.partyInviteSent = true
     this.cd.detectChanges()
   }

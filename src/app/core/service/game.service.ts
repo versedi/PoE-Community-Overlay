@@ -25,8 +25,4 @@ export class GameService {
     this.window.setAlwaysOnTop(true, 'pop-up-menu', 1)
     this.window.setVisibleOnAllWorkspaces(true)
   }
-
-  public sendCommand(command: string): void {
-    this.ipcRenderer.sendSync('game-send-command', command)
-  }
 }
