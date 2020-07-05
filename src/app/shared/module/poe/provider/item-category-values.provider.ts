@@ -15,6 +15,9 @@ export interface ItemCategoryValue {
   type: string
   mapTier: number
   links: number
+  gemLevel: number
+  gemQuality: number
+  corrupted: boolean
   relic: boolean
   chaosAmount: number
   change: number
@@ -172,6 +175,8 @@ export class ItemCategoryValuesProvider {
       case ItemCategory.GemActivegem:
       case ItemCategory.GemSupportGem:
       case ItemCategory.GemSupportGemplus:
+        const key = `${leagueId}_${ItemCategory.Gem}`
+        return this.fetch(key, () => this.fetchItem(leagueId, ItemOverviewType.SkillGem))
       case ItemCategory.Leaguestone:
       case ItemCategory.MonsterSample:
       case ItemCategory.CurrencyPiece:
@@ -203,6 +208,9 @@ export class ItemCategoryValuesProvider {
               type: undefined,
               links: undefined,
               mapTier: undefined,
+              gemLevel: undefined,
+              gemQuality: undefined,
+              corrupted: undefined,
               relic: undefined,
               change: sparkLine.totalChange,
               history: sparkLine.data,
@@ -229,8 +237,11 @@ export class ItemCategoryValuesProvider {
             const value: ItemCategoryValue = {
               name: line.name,
               type: line.baseType,
-              mapTier: line.mapTier,
               links: line.links,
+              mapTier: line.mapTier,
+              gemLevel: line.gemLevel,
+              gemQuality: line.gemQuality,
+              corrupted: line.corrupted,
               relic: line.itemClass === 9,
               change: sparkLine.totalChange,
               history: sparkLine.data,
