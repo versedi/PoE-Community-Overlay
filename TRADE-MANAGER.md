@@ -55,3 +55,4 @@ In progress...
 ## TODO
 - Highlight items
 - Handle outgoing trade offers
+- Play sound effects (buyer join hideout, new trade offer, etc.)
