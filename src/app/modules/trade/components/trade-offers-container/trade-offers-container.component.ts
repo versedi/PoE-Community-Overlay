@@ -64,11 +64,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {}
 
-  public ngAfterViewInit(): void { }
+  public ngAfterViewInit(): void {}
 
-  public ngOnDestroy(): void { }
+  public ngOnDestroy(): void {}
 
   public ignoreOffer(offer: Offer): void {
     const index: number = this.offers.findIndex(
@@ -120,9 +120,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
-          : 'Thanks!'
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
+            : 'Thanks!'
         }`
       )
     })
@@ -134,9 +134,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
-          : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
+            : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
         }`
       )
     })
@@ -148,9 +148,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
-          : `I'm busy right now, I will send you party invite when I'm ready.`
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
+            : `I'm busy right now, I will send you party invite when I'm ready.`
         }`
       )
     })
@@ -162,9 +162,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
-          : `Sorry, my ${offer.itemName} is already sold.`
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
+            : `Sorry, my ${offer.itemName} is already sold.`
         }`
       )
       this.ignoreOffer(offer)
