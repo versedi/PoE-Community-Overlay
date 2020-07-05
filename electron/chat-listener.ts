@@ -9,6 +9,7 @@ const regTradeAccepted = /Trade accepted/gi;
 const regTradeCancelled = /Trade cancelled/gi;
 const regGuild = /<.+> .+/gi;
 const regTwoDots = /: Hi, /gi;
+const regItemLocation = /(stash tab ".+"; position: left [0-9]+, top [0-9])/gi
 
 const currencyNameToImage = {
     alt: 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollMagic.png?v=6d9520174f6643e502da336e76b730d3',
@@ -125,6 +126,18 @@ export class ChatListener {
 
         var time = line.substring(0, 19);
 
+        var stashTabName = "",
+            left = "",
+            top = "";
+
+        if (line.match(regItemLocation)) {
+            stashTabName = line.substring(line.lastIndexOf('(stash tab "') + 12, line.lastIndexOf('"; position:'));
+            left = line.substring(line.lastIndexOf('; position: left ') + 17, line.lastIndexOf(', top '));
+            top = line.substring(line.lastIndexOf(', top ') + 6, line.lastIndexOf(')'));
+        }
+
+console.log(stashTabName, left, top)
+
         this.webContents.send('new-trade-offer', {
             buyerName,
             itemName: item,
@@ -133,6 +146,11 @@ export class ChatListener {
                 currency,
                 value: priceValue,
                 image: currencyNameToImage[currency]
+            },
+            itemLocation: {
+                stashTabName,
+                left: Number(left),
+                top: Number(top)
             }
         });
     }
