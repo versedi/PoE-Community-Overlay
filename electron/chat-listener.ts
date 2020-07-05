@@ -80,7 +80,10 @@ export class ChatListener {
     public start(): void {
         this.started = true;
 
-        watchFile(this.clientFileLocation, (current, previous) => {
+        watchFile(this.clientFileLocation, {
+            persistent: true,
+            interval: 1000
+        }, (current, previous) => {
             this.debounced_readLastLines();
         });
     }
