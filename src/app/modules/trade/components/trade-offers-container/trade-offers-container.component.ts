@@ -264,10 +264,16 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public highlightItem(): void {
     if (this.currentOffer) {
       this.showGrid = !this.showGrid;
+
+      if (this.showGrid) {
+        this.commandService.ctrlF(this.currentOffer.itemName);
+      }else{
+        this.commandService.clearCtrlF();
+      }
     } else if (this.showGrid) {
       this.showGrid = false;
     }
-    
+
     this.cd.detectChanges();
   }
 }
