@@ -16,6 +16,8 @@
   </ng-container>
 </div>
 
-<div class="grid">
-  <app-trade-stash-grid></app-trade-stash-grid>
+<div class="grid" *ngIf="showGrid">
+  <app-trade-stash-grid (location)="currentOffer.itemLocation"></app-trade-stash-grid>
 </div>
+
+<button class="btn-item-location" mat-raised-button (click)="highlightItem()">Tab "SELL"<br>Left: 8, Top: 7</button>

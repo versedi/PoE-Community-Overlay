@@ -136,8 +136,6 @@ export class ChatListener {
             top = line.substring(line.lastIndexOf(', top ') + 6, line.lastIndexOf(')'));
         }
 
-console.log(stashTabName, left, top)
-
         this.webContents.send('new-trade-offer', {
             buyerName,
             itemName: item,

@@ -4,3 +4,10 @@
     display:flex;
     justify-content: center;
 }
+
+.btn-item-location{
+    position: absolute;
+    bottom: 75%;
+    left: 4%;
+    opacity: 0.8;
+}
