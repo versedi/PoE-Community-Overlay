@@ -9,7 +9,7 @@ const regTradeAccepted = /Trade accepted/gi;
 const regTradeCancelled = /Trade cancelled/gi;
 const regGuild = /<.+> .+/gi;
 const regTwoDots = /: Hi, /gi;
-const regItemLocation = /(stash tab ".+"; position: left [0-9]+, top [0-9])/gi
+const regItemLocation = /(stash tab ".+"; position: left [0-9]+, top [0-9])/gi;
 
 const currencyNameToImage = {
     alt: 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollMagic.png?v=6d9520174f6643e502da336e76b730d3',

@@ -123,6 +123,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     if (index !== -1) {
       this.offers.splice(index, 1)
       this.currentOffer = null;
+      this.clearHighlight();
       this.cd.detectChanges()
     }
   }
@@ -152,6 +153,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param name Name of the buyer to kick
    */
   public kickBuyer(name: string): void {
+    this.clearHighlight();
     this.commandService.command(`/kick ${name}`)
   }
 
@@ -173,17 +175,20 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendThanksWhisper(offer: Offer): void {
-    this.settingsService.get().subscribe((settings) => {
-      const tradeSettings = settings as TradeUserSettings
+    this.clearHighlight();
 
-      this.commandService.command(
-        `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
-          : 'Thanks!'
-        }`
-      )
-    })
+    this.settingsService.get()
+      .subscribe((settings) => {
+        const tradeSettings = settings as TradeUserSettings
+
+        this.commandService.command(
+          `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
+            : 'Thanks!'
+          }`
+        )
+      })
   }
 
   /**
@@ -191,17 +196,20 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendStillInterestedWhisper(offer: Offer): void {
-    this.settingsService.get().subscribe((settings) => {
-      const tradeSettings = settings as TradeUserSettings
+    this.clearHighlight();
 
-      this.commandService.command(
-        `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
-          : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
-        }`
-      )
-    })
+    this.settingsService.get()
+      .subscribe((settings) => {
+        const tradeSettings = settings as TradeUserSettings
+
+        this.commandService.command(
+          `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
+            : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
+          }`
+        )
+      })
   }
 
   /**
@@ -209,17 +217,20 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendBusyWhisper(offer: Offer): void {
-    this.settingsService.get().subscribe((settings) => {
-      const tradeSettings = settings as TradeUserSettings
+    this.clearHighlight();
 
-      this.commandService.command(
-        `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
-          : `I'm busy right now, I will send you party invite when I'm ready.`
-        }`
-      )
-    })
+    this.settingsService.get()
+      .subscribe((settings) => {
+        const tradeSettings = settings as TradeUserSettings
+
+        this.commandService.command(
+          `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
+            : `I'm busy right now, I will send you party invite when I'm ready.`
+          }`
+        )
+      })
   }
 
   /**
@@ -227,18 +238,21 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendSoldWhisper(offer: Offer): void {
-    this.settingsService.get().subscribe((settings) => {
-      const tradeSettings = settings as TradeUserSettings
+    this.clearHighlight();
 
-      this.commandService.command(
-        `@${offer.buyerName} ${
-        tradeSettings
-          ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
-          : `Sorry, my ${offer.itemName} is already sold.`
-        }`
-      )
-      this.ignoreOffer(offer)
-    })
+    this.settingsService.get()
+      .subscribe((settings) => {
+        const tradeSettings = settings as TradeUserSettings
+
+        this.commandService.command(
+          `@${offer.buyerName} ${
+          tradeSettings
+            ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
+            : `Sorry, my ${offer.itemName} is already sold.`
+          }`
+        )
+        this.ignoreOffer(offer)
+      })
   }
 
   /**
@@ -246,6 +260,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the trade request
    */
   public sendTradeRequest(offer: Offer): void {
+    this.clearHighlight();
+
     this.commandService.command(`/tradewith ${offer.buyerName}`)
     offer.tradeRequestSent = true
   }
@@ -255,19 +271,26 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer
    */
   public sendPartyInvite(offer: Offer): void {
+    this.clearHighlight();
+
     this.commandService.command(`/invite ${offer.buyerName}`)
     offer.partyInviteSent = true;
     this.currentOffer = offer;
+
     this.cd.detectChanges();
   }
 
+  /**
+   * Show/Hide the highlighting grid
+   * Do/Undo the in-game search
+   */
   public highlightItem(): void {
     if (this.currentOffer) {
       this.showGrid = !this.showGrid;
 
       if (this.showGrid) {
         this.commandService.ctrlF(this.currentOffer.itemName);
-      }else{
+      } else {
         this.commandService.clearCtrlF();
       }
     } else if (this.showGrid) {
@@ -275,5 +298,18 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
 
     this.cd.detectChanges();
+  }
+
+  /**
+   * Hide the highlighting grid
+   * Clear the in-game search
+   * **Required if you want to send chat command/whispers**
+   */
+  public clearHighlight(): void {
+    if (this.showGrid) {
+      this.showGrid = false;
+      this.cd.detectChanges();
+      this.commandService.clearCtrlF();
+    }
   }
 }
