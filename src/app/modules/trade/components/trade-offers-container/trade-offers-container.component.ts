@@ -22,7 +22,17 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   /**
    * List of the current trade offers received and not ignored, removed or completed yet.
    */
-  public offers: Offer[] = []
+  public offers: Offer[] = [];
+
+  /**
+   * Currently selected offer
+   */
+  currentOffer: Offer = null;
+
+  /**
+   * Show/Hide the item highlight grid
+   */
+  showGrid: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -77,11 +87,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void { }
 
-  public ngAfterViewInit(): void {}
+  public ngAfterViewInit(): void { }
 
-  public ngOnDestroy(): void {}
+  public ngOnDestroy(): void { }
 
   /**
    * Remove an offer from the list of trade offers
@@ -95,6 +105,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
     if (index !== -1) {
       this.offers.splice(index, 1)
+
+      if (this.currentOffer === offer) {
+        this.currentOffer = null;
+      }
+
       this.cd.detectChanges()
     }
   }
@@ -107,6 +122,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
     if (index !== -1) {
       this.offers.splice(index, 1)
+      this.currentOffer = null;
       this.cd.detectChanges()
     }
   }
@@ -162,9 +178,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
-            : 'Thanks!'
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
+          : 'Thanks!'
         }`
       )
     })
@@ -180,9 +196,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
-            : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
+          : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
         }`
       )
     })
@@ -198,9 +214,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
-            : `I'm busy right now, I will send you party invite when I'm ready.`
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
+          : `I'm busy right now, I will send you party invite when I'm ready.`
         }`
       )
     })
@@ -216,9 +232,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
       this.commandService.command(
         `@${offer.buyerName} ${
-          tradeSettings
-            ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
-            : `Sorry, my ${offer.itemName} is already sold.`
+        tradeSettings
+          ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
+          : `Sorry, my ${offer.itemName} is already sold.`
         }`
       )
       this.ignoreOffer(offer)
@@ -240,7 +256,18 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    */
   public sendPartyInvite(offer: Offer): void {
     this.commandService.command(`/invite ${offer.buyerName}`)
-    offer.partyInviteSent = true
-    this.cd.detectChanges()
+    offer.partyInviteSent = true;
+    this.currentOffer = offer;
+    this.cd.detectChanges();
+  }
+
+  public highlightItem(): void {
+    if (this.currentOffer) {
+      this.showGrid = !this.showGrid;
+    } else if (this.showGrid) {
+      this.showGrid = false;
+    }
+    
+    this.cd.detectChanges();
   }
 }

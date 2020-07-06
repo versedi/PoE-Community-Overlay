@@ -1,13 +1,28 @@
-.offers{
+.offers {
     pointer-events: none;
     font-size: 8;
     display:flex;
     justify-content: center;
+    position: absolute;
+    bottom: 0;
 }
 
-.btn-item-location{
+.item-location {
     position: absolute;
-    bottom: 75%;
+    bottom: 7%;
     left: 4%;
     opacity: 0.8;
+}
+
+.lbl-item-location{
+    color:white;
+    background-color: black;
+    opacity: 0.8;
+}
+
+.grid{
+    position: absolute;
+    top: 161px;
+    left: 15px;
+    color: white;
 }

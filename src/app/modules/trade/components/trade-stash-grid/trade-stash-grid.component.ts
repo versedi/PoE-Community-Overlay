@@ -9,9 +9,6 @@ import {
     EventEmitter,
     Input,
   } from '@angular/core'
-  import Offer from '@modules/trade/class/Offer'
-  import FloatingButton from '@modules/trade/class/FloatingButton'
-  import { TradeService } from '@modules/trade/services/trade.service'
 import ItemLocation from '@modules/trade/class/ItemLocation'
   
   @Component({
@@ -24,12 +21,15 @@ import ItemLocation from '@modules/trade/class/ItemLocation'
     @Input() public location: ItemLocation
   
     constructor(private cd: ChangeDetectorRef) {
-
     }
   
-    public ngOnInit(): void {}
+    public ngOnInit(): void {
+      console.log('Init grid')
+    }
   
-    public ngAfterViewInit(): void {}
+    public ngAfterViewInit(): void {
+      console.log('Done init grid')
+    }
   
     public ngOnDestroy(): void {}
   }
