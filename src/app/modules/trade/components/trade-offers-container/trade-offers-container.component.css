@@ -10,14 +10,24 @@
 .item-location {
     position: absolute;
     bottom: 7%;
-    left: 4%;
-    opacity: 0.8;
+    left: 0;
+    width: 300px;
 }
 
 .lbl-item-location{
-    color:white;
-    background-color: black;
-    opacity: 0.8;
+    color: rgba(200, 200, 200, 0.87);
+    background-color: #232323;
+    display:flex;
+    justify-content: center;
+    border-radius: 3px;
+    border: 2px gray solid;
+    text-align: center;
+}
+
+.btn-highlight-item{
+    margin: 0;
+    left: 50%;
+    transform: translateX(-100%);
 }
 
 .grid{
