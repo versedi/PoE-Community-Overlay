@@ -110,6 +110,7 @@ export class ItemCategoryValuesProvider {
         return this.fetch(key, () => this.fetchItem(leagueId, ItemOverviewType.Scarab))
       }
       case ItemCategory.Jewel:
+      case ItemCategory.JewelBase:
       case ItemCategory.JewelAbyss:
       case ItemCategory.JewelCluster:
         if (rarity === ItemRarity.Unique) {
@@ -177,6 +178,11 @@ export class ItemCategoryValuesProvider {
       case ItemCategory.Leaguestone:
       case ItemCategory.MonsterSample:
       case ItemCategory.CurrencyPiece:
+      case ItemCategory.CurrencySeed:
+      case ItemCategory.CurrencyWildSeed:
+      case ItemCategory.CurrencyVividSeed:
+      case ItemCategory.CurrencyPrimalSeed:
+      case ItemCategory.CurrencySeedBooster:
         return of({ values: [] })
     }
   }
