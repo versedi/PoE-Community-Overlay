@@ -10,7 +10,7 @@
               ></div>
             </ng-container>
             <ng-template #darkBox>
-                <div class="box dark-box"></div>
+                <div class="box" [class.dark-box]="!darkerShadow" [class.darker-box]="darkerShadow" *ngIf="dropShadow"></div>
             </ng-template> 
     </div>
 </div>
