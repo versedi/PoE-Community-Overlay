@@ -1,5 +1,21 @@
 <div class="row" *ngFor="let row of [1,2,3,4,5,6,7,8,9,10,11,12]; let rowIndex = index">
     <div class="col" *ngFor="let col of [1,2,3,4,5,6,7,8,9,10,11,12]; let colIndex = index">
-        <div class="box" *ngIf="location && location.left === colIndex + 1 && location.top === rowIndex + 1"></div>
+        <ng-container
+            *ngIf="location && (location.left <= colIndex + 1 && location.left + location.width > colIndex + 1) && (location.top <= rowIndex + 1 && location.top + location.height > rowIndex + 1); else darkBox">
+            <div class="box box-highlight" 
+                [class.box-col-left]="location.left === colIndex + 1"
+                [class.box-col-right]="location.left + location.width - 1 === colIndex + 1"
+                [class.box-row-top]="location.top === rowIndex + 1"
+                [class.box-row-bottom]="location.top + location.height - 1 === rowIndex + 1"
+              ></div>
+            </ng-container>
+            <ng-template #darkBox>
+                <div class="box dark-box"></div>
+            </ng-template> 
     </div>
 </div>
+<!-- 
+    [class.box-col-left]="location.left == colIndex + 1"
+    [class.box-col-right]="location.left + location.width - 1 === coldIndex + 1"
+[class.box-row-top]="location.top === rowIndex + 1"
+[class.box-row-bottom]="location.top + location.height - 1 === rowIndex + 1" -->
