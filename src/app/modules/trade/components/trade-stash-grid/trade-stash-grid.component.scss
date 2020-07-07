@@ -1,11 +1,9 @@
 .row {
-    height: 53px;
     margin: 0;
     padding: 0;
 }
 
 .col{
-    width: 53px;
     margin: 0;
     padding: 0;
 }
@@ -56,4 +54,64 @@ $border-width: 5px;
 
 .darker-box{
     background-color: rgba(0,0,0,0.8);
+}
+
+/* Resizing */
+.resizer{
+    position: absolute;
+    background-color: #232323;
+    color:gray;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid gray;
+}
+
+.arrow:hover{
+    background-color: darkgray;
+    border-radius: 8px;
+}
+
+ .resizer-bottom {
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-100%);
+  }
+
+ .resizer-right {
+    right: -10px;
+    top: 50%;
+    transform: translateY(-100%);
+  }
+
+ .resizer-left {
+    left: -10px;
+    top: 50%;
+    transform: translateY(-100%);
+  }
+
+ .resizer-top {
+    left: 50%;
+    top: -10px;
+    transform: translateX(-100%);
+  }
+
+  .inline{
+      display: inline-block;
+  }
+
+  .box-small-left{
+      border-left-width: 1px;
+  }
+
+  .box-small-right{
+    border-right-width: 1px;
+}
+
+.box-small-top{
+    border-top-width: 1px;
+}
+
+.box-small-bottom{
+    border-bottom-width: 1px;
 }

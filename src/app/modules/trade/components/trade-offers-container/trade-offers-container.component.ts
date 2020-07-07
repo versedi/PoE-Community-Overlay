@@ -11,6 +11,7 @@ import { TradeService } from '@modules/trade/services/trade.service'
 import { UserSettingsService } from 'src/app/layout/service'
 import { TradeUserSettings } from '../trade-settings/trade-settings.component'
 import { CommandService } from '@modules/command/service/command.service'
+import { GridLocation } from '../trade-stash-grid/trade-stash-grid.component'
 
 @Component({
   selector: 'app-trade-offers-container',
@@ -38,22 +39,33 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   dropShadow: boolean = true;
   darkerShadow: boolean = false;
 
+  /**
+   * Grid Resizing
+   */
+  gridLocation: GridLocation = {
+    top: 161,
+    left: 15
+  };
+  pxTop = () => `${this.gridLocation.top}px`;
+  pxLeft = () => `${this.gridLocation.left}px`;
+  gridDemo: boolean = false;
+
   constructor(
     private cd: ChangeDetectorRef,
     private tradeService: TradeService,
     private settingsService: UserSettingsService,
     private commandService: CommandService
   ) {
-    this.tradeService.offers.subscribe(this.handleNewOffer.bind(this))
-    this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this))
-    this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this))
+    this.tradeService.offers.subscribe(this.handleNewOffer.bind(this));
+    this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this));
+    this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this));
   }
 
   /**
    * Handles trade cancelled messages from chatListener
    */
   private handleTradeCancelled(): void {
-    this.resetOfferTrades()
+    this.resetOfferTrades();
   }
 
   /**
@@ -340,5 +352,30 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     if (this.searching) {
       this.commandService.clearCtrlF();
     }
+  }
+
+  public updateGridPosition(side: string, value: number): void {
+    switch (side) {
+      case 'top':
+        this.gridLocation.top = value;
+        this.cd.detectChanges();
+        break;
+
+      case 'left':
+        this.gridLocation.left = value;
+        this.cd.detectChanges();
+        break;
+    }
+  }
+
+  public setGridDemo():void{
+    this.gridDemo = !this.gridDemo;
+
+    // Otherwise it's too dark to clearly see the stash tab squares
+    if (this.searching) {
+      this.commandService.clearCtrlF();
+    }
+
+    this.cd.detectChanges();
   }
 }
