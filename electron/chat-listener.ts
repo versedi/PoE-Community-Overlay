@@ -30,6 +30,13 @@ const currencyNameToImage = {
     silver: 'https://web.poecdn.com/image/Art/2DItems/Currency/SilverObol.png?v=93c1b204ec2736a2fe5aabbb99510bcf'
 };
 
+/**
+ * Find items that are greater then 1x1
+ */
+import { ItemGridSize, ItemType } from './types/chat-items'
+import * as types from './types/chat-items';
+const itemTypes = types.default;
+
 export class ChatListener {
     private ipcMain: IpcMain;
     private webContents: Electron.WebContents;
@@ -136,6 +143,22 @@ export class ChatListener {
             top = line.substring(line.lastIndexOf(', top ') + 6, line.lastIndexOf(')'));
         }
 
+        var size = {
+            width: 1,
+            height: 1
+        };
+
+        for(let type of itemTypes){
+            for(let base of type.bases){
+                if(item.indexOf(base) != -1){
+                    size = type.size;
+                    break;
+                }
+            }
+        }
+
+        console.log({size})
+
         this.webContents.send('new-trade-offer', {
             buyerName,
             itemName: item,
@@ -148,7 +171,8 @@ export class ChatListener {
             itemLocation: {
                 stashTabName,
                 left: Number(left),
-                top: Number(top)
+                top: Number(top),
+                ...size
             }
         });
     }
