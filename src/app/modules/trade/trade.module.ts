@@ -37,6 +37,9 @@ export class TradeModule implements FeatureModule {
       tradeStillInterestedWhisper: 'Are you still interested in my {item} listed for {price}?',
       tradeAutoKick: true,
       tradeAutoWhisper: true,
+      tradeOverlayHighlight: true,
+      tradeInGameHighlight: true,
+      tradeOverlayHighlightDropShadow: true,
     }
 
     return {

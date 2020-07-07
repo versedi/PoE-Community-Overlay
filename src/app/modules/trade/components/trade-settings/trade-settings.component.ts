@@ -17,7 +17,10 @@ export interface TradeUserSettings extends UserSettings {
   tradeSoldWhisper: string
   tradeStillInterestedWhisper: string
   tradeAutoKick: boolean
-  tradeAutoWhisper: boolean
+  tradeAutoWhisper: boolean,
+  tradeOverlayHighlight: boolean,
+  tradeInGameHighlight: boolean,
+  tradeOverlayHighlightDropShadow: boolean,
 }
 
 @Component({

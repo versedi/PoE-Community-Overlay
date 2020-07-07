@@ -17,11 +17,11 @@
 </div>
 
 <div class="grid" *ngIf="showGrid" >
-  <app-trade-stash-grid [location]="currentOffer.itemLocation"></app-trade-stash-grid>
+  <app-trade-stash-grid [location]="currentOffer.itemLocation" [dropShadow]="dropShadow" [darkerShadow]="darkerShadow"></app-trade-stash-grid>
 </div>
 
 <div *ngIf="currentOffer" class="item-location">
   <p class="lbl-item-location">Tab "{{currentOffer.itemLocation.stashTabName}}"<br>Left: {{currentOffer.itemLocation.left}}, Top: {{currentOffer.itemLocation.top}}</p>
   <br>
-  <button class="btn-highlight-item" mat-raised-button (click)="highlightItem()">{{showGrid ? 'Hide' : 'Show'}}</button>
+  <button class="btn-highlight-item" mat-raised-button (click)="highlightItem()">{{highlight ? 'Hide' : 'Show'}}</button>
 </div>

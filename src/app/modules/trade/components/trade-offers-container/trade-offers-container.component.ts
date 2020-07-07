@@ -32,7 +32,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   /**
    * Show/Hide the item highlight grid
    */
+  highlight: boolean = false;
+  searching: boolean = false;
   showGrid: boolean = false;
+  dropShadow: boolean = true;
+  darkerShadow: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -285,19 +289,41 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * Do/Undo the in-game search
    */
   public highlightItem(): void {
-    if (this.currentOffer) {
-      this.showGrid = !this.showGrid;
+    this.settingsService.get()
+      .subscribe(settings => {
+        var tradeSettings = <TradeUserSettings>settings;
 
-      if (this.showGrid) {
-        this.commandService.ctrlF(this.currentOffer.itemName);
-      } else {
-        this.commandService.clearCtrlF();
-      }
-    } else if (this.showGrid) {
-      this.showGrid = false;
-    }
+        if (this.currentOffer) {
+          this.highlight = !this.highlight;
 
-    this.cd.detectChanges();
+          if (tradeSettings.tradeOverlayHighlight) {
+            this.showGrid = this.highlight
+            this.dropShadow = tradeSettings.tradeOverlayHighlightDropShadow;
+          }
+
+          if (tradeSettings.tradeInGameHighlight) {
+            this.searching = this.highlight;
+
+            if (this.searching) {
+              this.commandService.ctrlF(this.currentOffer.itemName);
+            } else {
+              this.commandService.clearCtrlF();
+            }
+
+            this.darkerShadow = false;
+          } else {
+            this.darkerShadow = true;
+          }
+        } else if (this.showGrid || this.searching || this.highlight) {
+          this.showGrid = false;
+          this.searching = false;
+          this.highlight = false;
+        }
+
+        if (tradeSettings.tradeInGameHighlight || tradeSettings.tradeOverlayHighlight) {
+          this.cd.detectChanges();
+        }
+      });
   }
 
   /**
@@ -309,6 +335,9 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     if (this.showGrid) {
       this.showGrid = false;
       this.cd.detectChanges();
+    }
+
+    if (this.searching) {
       this.commandService.clearCtrlF();
     }
   }
