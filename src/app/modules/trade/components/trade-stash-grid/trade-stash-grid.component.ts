@@ -24,11 +24,9 @@ import ItemLocation from '@modules/trade/class/ItemLocation'
     }
   
     public ngOnInit(): void {
-      console.log('Init grid')
     }
   
     public ngAfterViewInit(): void {
-      console.log('Done init grid')
     }
   
     public ngOnDestroy(): void {}

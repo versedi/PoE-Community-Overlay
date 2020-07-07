@@ -157,8 +157,6 @@ export class ChatListener {
             }
         }
 
-        console.log({size})
-
         this.webContents.send('new-trade-offer', {
             buyerName,
             itemName: item,
