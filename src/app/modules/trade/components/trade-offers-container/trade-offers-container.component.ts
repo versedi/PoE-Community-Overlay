@@ -43,8 +43,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * Grid Resizing
    */
   gridLocation: GridLocation = {
-    top: 161,
-    left: 15
+    top: 0,
+    left: 0
   };
   pxTop = () => `${this.gridLocation.top}px`;
   pxLeft = () => `${this.gridLocation.left}px`;
@@ -59,6 +59,27 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     this.tradeService.offers.subscribe(this.handleNewOffer.bind(this));
     this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this));
     this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this));
+
+    this.settingsService.get()
+      .subscribe(settings => {
+        const tradeSettings = <TradeUserSettings>settings;
+
+        let changes: boolean = false;
+
+        if (tradeSettings.tradeOverlayHighlightLeft) {
+          changes = true;
+          this.gridLocation.left = tradeSettings.tradeOverlayHighlightLeft;
+        }
+
+        if (tradeSettings.tradeOverlayHighlightTop) {
+          changes = true;
+          this.gridLocation.top = tradeSettings.tradeOverlayHighlightTop;
+        }
+
+        if (changes) {
+          this.cd.detectChanges();
+        }
+      });
   }
 
   /**
@@ -335,6 +356,10 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
         if (tradeSettings.tradeInGameHighlight || tradeSettings.tradeOverlayHighlight) {
           this.cd.detectChanges();
         }
+
+        if (!this.showGrid && this.gridDemo) {
+          this.gridDemo = false;
+        }
       });
   }
 
@@ -357,18 +382,34 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public updateGridPosition(side: string, value: number): void {
     switch (side) {
       case 'top':
-        this.gridLocation.top = value;
-        this.cd.detectChanges();
+        this.settingsService.get()
+          .subscribe(settings => {
+            const tradeSettings = <TradeUserSettings>settings;
+            this.gridLocation.top = value;
+
+            tradeSettings.tradeOverlayHighlightTop = this.gridLocation.top;
+            this.settingsService.save(tradeSettings);
+
+            this.cd.detectChanges();
+          });
         break;
 
       case 'left':
-        this.gridLocation.left = value;
-        this.cd.detectChanges();
+        this.settingsService.get()
+          .subscribe(settings => {
+            const tradeSettings = <TradeUserSettings>settings;
+            this.gridLocation.left = value;
+
+            tradeSettings.tradeOverlayHighlightLeft = this.gridLocation.left;
+            this.settingsService.save(tradeSettings);
+
+            this.cd.detectChanges();
+          });
         break;
     }
   }
 
-  public setGridDemo():void{
+  public setGridDemo(): void {
     this.gridDemo = !this.gridDemo;
 
     // Otherwise it's too dark to clearly see the stash tab squares

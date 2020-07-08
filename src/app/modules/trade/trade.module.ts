@@ -14,20 +14,20 @@ import { TradeStashGridComponent } from './components/trade-stash-grid/trade-sta
 @NgModule({
   providers: [{ provide: FEATURE_MODULES, useClass: TradeModule, multi: true }],
   declarations: [
-    TradeOfferComponent, 
-    TradeOffersContainerComponent, 
+    TradeOfferComponent,
+    TradeOffersContainerComponent,
     TradeSettingsComponent,
     TradeStashGridComponent
   ],
   exports: [
-    TradeOfferComponent, 
+    TradeOfferComponent,
     TradeOffersContainerComponent,
     TradeStashGridComponent
   ],
   imports: [SharedModule],
 })
 export class TradeModule implements FeatureModule {
-  constructor() {}
+  constructor() { }
 
   public getSettings(): UserSettingsFeature {
     const defaultSettings: TradeUserSettings = {
@@ -40,6 +40,10 @@ export class TradeModule implements FeatureModule {
       tradeOverlayHighlight: true,
       tradeInGameHighlight: true,
       tradeOverlayHighlightDropShadow: true,
+      tradeOverlayHighlightLeft: 15,
+      tradeOverlayHighlightTop: 161,
+      tradeOverlayHighlightWidth: 53,
+      tradeOverlayHighlightHeight: 53
     }
 
     return {

@@ -20,9 +20,9 @@
   <app-trade-stash-grid [location]="currentOffer.itemLocation" [dropShadow]="dropShadow" [darkerShadow]="darkerShadow" [demo]="gridDemo" [gridLocation]="gridLocation" (evTop)="updateGridPosition('top', $event)" (evLeft)="updateGridPosition('left', $event)"></app-trade-stash-grid>
 </div>
 
-<button class="btn-adjust-grid" mat-raised-button *ngIf="showGrid" (click)="setGridDemo()">Adjust Grid</button>
+<button class="btn-adjust-grid" mat-raised-button *ngIf="showGrid" (click)="setGridDemo()">{{gridDemo ? 'Save Grid' : 'Adjust Grid'}}</button>
 
-<p class="lbl-adjust-message" *ngIf="gridDemo">Please adjust the grid approximately to your stash tab layout. <br>You need to do that, because every player use different screen resolution, size and settings. <br>But, don't worry you'll have to do this only once.</p>
+<p class="lbl-adjust-message" *ngIf="gridDemo && showGrid">Please adjust the grid approximately to your stash tab layout. <br>You need to do that, because every player use different screen resolution, size and settings. <br>But, don't worry you'll have to do this only once.</p>
 
 <div *ngIf="currentOffer" class="item-location">
   <p class="lbl-item-location">Tab "{{currentOffer.itemLocation.stashTabName}}"<br>Left: {{currentOffer.itemLocation.left}}, Top: {{currentOffer.itemLocation.top}}</p>

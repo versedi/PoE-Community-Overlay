@@ -21,6 +21,10 @@ export interface TradeUserSettings extends UserSettings {
   tradeOverlayHighlight: boolean,
   tradeInGameHighlight: boolean,
   tradeOverlayHighlightDropShadow: boolean,
+  tradeOverlayHighlightLeft: number,
+  tradeOverlayHighlightTop: number,
+  tradeOverlayHighlightWidth: number,
+  tradeOverlayHighlightHeight: number,
 }
 
 @Component({

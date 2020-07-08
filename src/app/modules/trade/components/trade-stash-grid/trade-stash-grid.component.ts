@@ -12,6 +12,9 @@ import {
   EventEmitter,
 } from '@angular/core'
 import ItemLocation from '@modules/trade/class/ItemLocation'
+import { UserSettingsService } from 'src/app/layout/service';
+import { TradeUserSettings } from '../trade-settings/trade-settings.component';
+import { WindowService } from '@app/service';
 
 const GRID_SIZE_UNIT: number = 0.5;
 const GRID_POSITION_UNIT: number = 0.5 * 12; // GRID_SIZE_UNIT is per cell and we have 12
@@ -40,9 +43,9 @@ export class TradeStashGridComponent implements OnInit, AfterViewInit, OnDestroy
   /**
    * Grid Resizing
    */
-  width: number = 53;
+  width: number = 0;
   pxWidth = () => `${this.width}px`;
-  height: number = 53;
+  height: number = 0;
   pxHeight = () => `${this.height}px`;
   @Input() gridLocation: GridLocation;
   top: number;
@@ -50,7 +53,27 @@ export class TradeStashGridComponent implements OnInit, AfterViewInit, OnDestroy
   left: number;
   @Output() evLeft = new EventEmitter<number>();
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, private settingsService: UserSettingsService, private windowService:WindowService) {
+    this.settingsService.get()
+      .subscribe(settings => {
+        const tradeSettings = <TradeUserSettings>settings;
+
+        let changes: boolean = false;
+
+        if (tradeSettings.tradeOverlayHighlightWidth) {
+          changes = true;
+          this.width = tradeSettings.tradeOverlayHighlightWidth;
+        }
+
+        if (tradeSettings.tradeOverlayHighlightHeight) {
+          changes = true;
+          this.height = tradeSettings.tradeOverlayHighlightHeight;
+        }
+
+        if (changes) {
+          this.cd.detectChanges();
+        }
+      });
   }
 
   public ngOnInit(): void {
@@ -66,19 +89,36 @@ export class TradeStashGridComponent implements OnInit, AfterViewInit, OnDestroy
   resize(side: string, increment: number = 1): void {
     switch (side) {
       case 'right':
-        this.width += (GRID_SIZE_UNIT * increment);
-        this.cd.detectChanges();
+        this.settingsService.get()
+          .subscribe(settings => {
+            const tradeSettings = <TradeUserSettings>settings;
+
+            this.width += (GRID_SIZE_UNIT * increment);
+
+            tradeSettings.tradeOverlayHighlightWidth = this.width;
+            this.settingsService.save(tradeSettings);
+
+            this.cd.detectChanges();
+          });
         break;
 
       case 'bottom':
-        this.height += (GRID_SIZE_UNIT * increment);
-        this.cd.detectChanges();
+        this.settingsService.get()
+          .subscribe(settings => {
+            const tradeSettings = <TradeUserSettings>settings;
+
+            this.height += (GRID_SIZE_UNIT * increment);
+
+            tradeSettings.tradeOverlayHighlightHeight = this.height;
+            this.settingsService.save(tradeSettings);
+
+            this.cd.detectChanges();
+          });
         break;
 
       case 'top':
         this.top += (GRID_POSITION_UNIT * increment);
         this.evTop.emit(this.top);
-        console.log(this.top)
         break;
 
       case 'left':

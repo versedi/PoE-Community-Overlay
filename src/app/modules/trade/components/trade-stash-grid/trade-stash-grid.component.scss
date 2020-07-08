@@ -72,28 +72,27 @@ $border-width: 5px;
 }
 
  .resizer-bottom {
-    position: absolute;
     left: 50%;
     bottom: -10px;
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 
  .resizer-right {
     right: -10px;
     top: 50%;
-    transform: translateY(-100%);
+    transform: translateY(-50%);
   }
 
  .resizer-left {
     left: -10px;
     top: 50%;
-    transform: translateY(-100%);
+    transform: translateY(-50%);
   }
 
  .resizer-top {
     left: 50%;
     top: -10px;
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 
   .inline{
@@ -114,4 +113,8 @@ $border-width: 5px;
 
 .box-small-bottom{
     border-bottom-width: 1px;
+}
+
+.ignore-mouse{
+    pointer-events: none;
 }
