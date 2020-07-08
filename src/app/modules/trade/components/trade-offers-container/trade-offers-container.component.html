@@ -16,7 +16,7 @@
   </ng-container>
 </div>
 
-<div class="grid" *ngIf="showGrid" [style.top]="pxTop()" [style.left]="pxLeft()">
+<div class="grid ignore-mouse" *ngIf="showGrid" [style.top]="pxTop()" [style.left]="pxLeft()">
   <app-trade-stash-grid [location]="currentOffer.itemLocation" [dropShadow]="dropShadow" [darkerShadow]="darkerShadow" [demo]="gridDemo" [gridLocation]="gridLocation" (evTop)="updateGridPosition('top', $event)" (evLeft)="updateGridPosition('left', $event)"></app-trade-stash-grid>
 </div>
 
