@@ -60,6 +60,13 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this));
     this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this));
 
+    this.setGridLocation();
+  }
+
+  /**
+   * Set the grid location based on the settings
+   */
+  private setGridLocation(): void {
     this.settingsService.get()
       .subscribe(settings => {
         const tradeSettings = <TradeUserSettings>settings;
@@ -379,6 +386,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
+  /**
+   * Update the grid position XY. In pixels
+   * @param side left (x) or top (y)
+   * @param value how many pixel
+   */
   public updateGridPosition(side: string, value: number): void {
     switch (side) {
       case 'top':
@@ -409,6 +421,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
+  /**
+   * Put the grid in demo mode.
+   * Display all the square of the grid with borders
+   * **It clears the Ctrl + F search command**
+   */
   public setGridDemo(): void {
     this.gridDemo = !this.gridDemo;
 

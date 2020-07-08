@@ -5,8 +5,6 @@ import {
   OnDestroy,
   OnInit,
   Input,
-  ViewChild,
-  Renderer2,
   ChangeDetectorRef,
   Output,
   EventEmitter,
@@ -16,9 +14,15 @@ import { UserSettingsService } from 'src/app/layout/service';
 import { TradeUserSettings } from '../trade-settings/trade-settings.component';
 import { WindowService } from '@app/service';
 
+/**
+ * Define the grid movement unit when in demo mode
+ */
 const GRID_SIZE_UNIT: number = 0.5;
 const GRID_POSITION_UNIT: number = 0.5 * 12; // GRID_SIZE_UNIT is per cell and we have 12
 
+/**
+ * Define the grid X,Y location, based on the CSS position attribute
+ */
 export interface GridLocation {
   top: number,
   left: number;
@@ -35,9 +39,15 @@ export class TradeStashGridComponent implements OnInit, AfterViewInit, OnDestroy
    * Item location and size
    */
   @Input() public location: ItemLocation;
+
+  /**
+   * Grid settings
+   * dropShadow = does the overlay add a shadow on top of the stash
+   * darkerShadow = makes the overlay darker
+   * demo = define if the grid is displayed in demo mode
+   */
   @Input() public dropShadow: boolean;
   @Input() public darkerShadow: boolean;
-
   @Input() public demo: boolean;
 
   /**
@@ -53,7 +63,14 @@ export class TradeStashGridComponent implements OnInit, AfterViewInit, OnDestroy
   left: number;
   @Output() evLeft = new EventEmitter<number>();
 
-  constructor(private cd: ChangeDetectorRef, private settingsService: UserSettingsService, private windowService:WindowService) {
+  constructor(private cd: ChangeDetectorRef, private settingsService: UserSettingsService) {
+    this.setGridSize();
+  }
+
+  /**
+   * Init the grid size with the settings values
+   */
+  private setGridSize(): void {
     this.settingsService.get()
       .subscribe(settings => {
         const tradeSettings = <TradeUserSettings>settings;
@@ -81,11 +98,15 @@ export class TradeStashGridComponent implements OnInit, AfterViewInit, OnDestroy
     this.left = this.gridLocation.left;
   }
 
-  public ngAfterViewInit(): void {
-  }
+  public ngAfterViewInit(): void { }
 
   public ngOnDestroy(): void { }
 
+  /**
+   * Update the grid size and position
+   * @param side right, left, top, bottom
+   * @param increment 1 or -1. Positive or negative
+   */
   resize(side: string, increment: number = 1): void {
     switch (side) {
       case 'right':
