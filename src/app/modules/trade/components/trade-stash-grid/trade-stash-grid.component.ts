@@ -9,7 +9,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import ItemLocation from '@modules/trade/class/ItemLocation'
+import ItemLocation from '../../class/ItemLocation';
 import { UserSettingsService } from 'src/app/layout/service'
 import { TradeUserSettings } from '../trade-settings/trade-settings.component'
 import { WindowService } from '@app/service'
