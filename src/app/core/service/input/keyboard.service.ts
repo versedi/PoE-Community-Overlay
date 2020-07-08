@@ -12,7 +12,7 @@ export enum KeyCode {
   VK_LEFT = 0x25,
   VK_RIGHT = 0x27,
   VK_X = 0x58,
-  VK_ESC = 0x1B,
+  VK_ESC = 0x1b,
 }
 
 @Injectable({

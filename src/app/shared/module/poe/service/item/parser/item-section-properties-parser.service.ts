@@ -137,9 +137,9 @@ export class ItemSectionPropertiesParserService implements ItemSectionParserServ
         const augmented = text.indexOf(AUGMENTED_PHRASE) !== -1
         text = text.replace(AUGMENTED_PHRASE, '')
         const property: ItemValueProperty = {
-          augmented: augmented,
+          augmented,
           value: {
-            text: text,
+            text,
             value: +text.replace('+', '').replace('%', ''),
           },
         }

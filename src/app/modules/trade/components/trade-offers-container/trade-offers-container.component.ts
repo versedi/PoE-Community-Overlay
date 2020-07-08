@@ -20,80 +20,78 @@ import { GridLocation } from '../trade-stash-grid/trade-stash-grid.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnDestroy {
-  /**
-   * List of the current trade offers received and not ignored, removed or completed yet.
-   */
-  public offers: Offer[] = [];
-
-  /**
-   * Currently selected offer
-   */
-  currentOffer: Offer = null;
-
-  /**
-   * Show/Hide the item highlight grid
-   */
-  highlight: boolean = false;
-  searching: boolean = false;
-  showGrid: boolean = false;
-  dropShadow: boolean = true;
-  darkerShadow: boolean = false;
-
-  /**
-   * Grid Resizing
-   */
-  gridLocation: GridLocation = {
-    top: 0,
-    left: 0
-  };
-  pxTop = () => `${this.gridLocation.top}px`;
-  pxLeft = () => `${this.gridLocation.left}px`;
-  gridDemo: boolean = false;
-
   constructor(
     private cd: ChangeDetectorRef,
     private tradeService: TradeService,
     private settingsService: UserSettingsService,
     private commandService: CommandService
   ) {
-    this.tradeService.offers.subscribe(this.handleNewOffer.bind(this));
-    this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this));
-    this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this));
+    this.tradeService.offers.subscribe(this.handleNewOffer.bind(this))
+    this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this))
+    this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this))
 
-    this.setGridLocation();
+    this.setGridLocation()
   }
+  /**
+   * List of the current trade offers received and not ignored, removed or completed yet.
+   */
+  public offers: Offer[] = []
+
+  /**
+   * Currently selected offer
+   */
+  public currentOffer: Offer = null
+
+  /**
+   * Show/Hide the item highlight grid
+   */
+  public highlight = false
+  public searching = false
+  public showGrid = false
+  public dropShadow = true
+  public darkerShadow = false
+
+  /**
+   * Grid Resizing
+   */
+  public gridLocation: GridLocation = {
+    top: 0,
+    left: 0,
+  }
+  public gridDemo = false
+  public pxTop = () => `${this.gridLocation.top}px`
+  public pxLeft = () => `${this.gridLocation.left}px`
 
   /**
    * Set the grid location based on the settings
    */
   private setGridLocation(): void {
-    this.settingsService.get()
-      .subscribe(settings => {
-        const tradeSettings = <TradeUserSettings>settings;
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
 
-        let changes: boolean = false;
+      let changes = false
 
-        if (tradeSettings.tradeOverlayHighlightLeft) {
-          changes = true;
-          this.gridLocation.left = tradeSettings.tradeOverlayHighlightLeft;
-        }
+      if (tradeSettings.tradeOverlayHighlightLeft) {
+        changes = true
+        this.gridLocation.left = tradeSettings.tradeOverlayHighlightLeft
+      }
 
-        if (tradeSettings.tradeOverlayHighlightTop) {
-          changes = true;
-          this.gridLocation.top = tradeSettings.tradeOverlayHighlightTop;
-        }
+      if (tradeSettings.tradeOverlayHighlightTop) {
+        changes = true
+        this.gridLocation.top = tradeSettings.tradeOverlayHighlightTop
+      }
 
-        if (changes) {
-          this.cd.detectChanges();
-        }
-      });
+      if (changes) {
+        this.cd.detectChanges()
+      }
+    })
   }
 
   /**
    * Handles trade cancelled messages from chatListener
    */
   private handleTradeCancelled(): void {
-    this.resetOfferTrades();
+    this.resetOfferTrades()
   }
 
   /**
@@ -131,11 +129,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {}
 
-  public ngAfterViewInit(): void { }
+  public ngAfterViewInit(): void {}
 
-  public ngOnDestroy(): void { }
+  public ngOnDestroy(): void {}
 
   /**
    * Remove an offer from the list of trade offers
@@ -151,7 +149,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
       this.offers.splice(index, 1)
 
       if (this.currentOffer === offer) {
-        this.currentOffer = null;
+        this.currentOffer = null
       }
 
       this.cd.detectChanges()
@@ -166,8 +164,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
     if (index !== -1) {
       this.offers.splice(index, 1)
-      this.currentOffer = null;
-      this.clearHighlight();
+      this.currentOffer = null
+      this.clearHighlight()
       this.cd.detectChanges()
     }
   }
@@ -197,7 +195,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param name Name of the buyer to kick
    */
   public kickBuyer(name: string): void {
-    this.clearHighlight();
+    this.clearHighlight()
     this.commandService.command(`/kick ${name}`)
   }
 
@@ -219,20 +217,19 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendThanksWhisper(offer: Offer): void {
-    this.clearHighlight();
+    this.clearHighlight()
 
-    this.settingsService.get()
-      .subscribe((settings) => {
-        const tradeSettings = settings as TradeUserSettings
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
 
-        this.commandService.command(
-          `@${offer.buyerName} ${
+      this.commandService.command(
+        `@${offer.buyerName} ${
           tradeSettings
             ? this.insertWhisperVars(tradeSettings.tradeThanksWhisper, offer)
             : 'Thanks!'
-          }`
-        )
-      })
+        }`
+      )
+    })
   }
 
   /**
@@ -240,20 +237,19 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendStillInterestedWhisper(offer: Offer): void {
-    this.clearHighlight();
+    this.clearHighlight()
 
-    this.settingsService.get()
-      .subscribe((settings) => {
-        const tradeSettings = settings as TradeUserSettings
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
 
-        this.commandService.command(
-          `@${offer.buyerName} ${
+      this.commandService.command(
+        `@${offer.buyerName} ${
           tradeSettings
             ? this.insertWhisperVars(tradeSettings.tradeStillInterestedWhisper, offer)
             : `Are you still interested in my ${offer.itemName} listed for ${offer.price.value} ${offer.price.currency}?`
-          }`
-        )
-      })
+        }`
+      )
+    })
   }
 
   /**
@@ -261,20 +257,19 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendBusyWhisper(offer: Offer): void {
-    this.clearHighlight();
+    this.clearHighlight()
 
-    this.settingsService.get()
-      .subscribe((settings) => {
-        const tradeSettings = settings as TradeUserSettings
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
 
-        this.commandService.command(
-          `@${offer.buyerName} ${
+      this.commandService.command(
+        `@${offer.buyerName} ${
           tradeSettings
             ? this.insertWhisperVars(tradeSettings.tradeBusyWhisper, offer)
             : `I'm busy right now, I will send you party invite when I'm ready.`
-          }`
-        )
-      })
+        }`
+      )
+    })
   }
 
   /**
@@ -282,21 +277,20 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendSoldWhisper(offer: Offer): void {
-    this.clearHighlight();
+    this.clearHighlight()
 
-    this.settingsService.get()
-      .subscribe((settings) => {
-        const tradeSettings = settings as TradeUserSettings
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
 
-        this.commandService.command(
-          `@${offer.buyerName} ${
+      this.commandService.command(
+        `@${offer.buyerName} ${
           tradeSettings
             ? this.insertWhisperVars(tradeSettings.tradeSoldWhisper, offer)
             : `Sorry, my ${offer.itemName} is already sold.`
-          }`
-        )
-        this.ignoreOffer(offer)
-      })
+        }`
+      )
+      this.ignoreOffer(offer)
+    })
   }
 
   /**
@@ -304,7 +298,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the trade request
    */
   public sendTradeRequest(offer: Offer): void {
-    this.clearHighlight();
+    this.clearHighlight()
 
     this.commandService.command(`/tradewith ${offer.buyerName}`)
     offer.tradeRequestSent = true
@@ -315,13 +309,13 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer
    */
   public sendPartyInvite(offer: Offer): void {
-    this.clearHighlight();
+    this.clearHighlight()
 
     this.commandService.command(`/invite ${offer.buyerName}`)
-    offer.partyInviteSent = true;
-    this.currentOffer = offer;
+    offer.partyInviteSent = true
+    this.currentOffer = offer
 
-    this.cd.detectChanges();
+    this.cd.detectChanges()
   }
 
   /**
@@ -329,45 +323,44 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * Do/Undo the in-game search
    */
   public highlightItem(): void {
-    this.settingsService.get()
-      .subscribe(settings => {
-        var tradeSettings = <TradeUserSettings>settings;
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
 
-        if (this.currentOffer) {
-          this.highlight = !this.highlight;
+      if (this.currentOffer) {
+        this.highlight = !this.highlight
 
-          if (tradeSettings.tradeOverlayHighlight) {
-            this.showGrid = this.highlight
-            this.dropShadow = tradeSettings.tradeOverlayHighlightDropShadow;
-          }
+        if (tradeSettings.tradeOverlayHighlight) {
+          this.showGrid = this.highlight
+          this.dropShadow = tradeSettings.tradeOverlayHighlightDropShadow
+        }
 
-          if (tradeSettings.tradeInGameHighlight) {
-            this.searching = this.highlight;
+        if (tradeSettings.tradeInGameHighlight) {
+          this.searching = this.highlight
 
-            if (this.searching) {
-              this.commandService.ctrlF(this.currentOffer.itemName);
-            } else {
-              this.commandService.clearCtrlF();
-            }
-
-            this.darkerShadow = false;
+          if (this.searching) {
+            this.commandService.ctrlF(this.currentOffer.itemName)
           } else {
-            this.darkerShadow = true;
+            this.commandService.clearCtrlF()
           }
-        } else if (this.showGrid || this.searching || this.highlight) {
-          this.showGrid = false;
-          this.searching = false;
-          this.highlight = false;
-        }
 
-        if (tradeSettings.tradeInGameHighlight || tradeSettings.tradeOverlayHighlight) {
-          this.cd.detectChanges();
+          this.darkerShadow = false
+        } else {
+          this.darkerShadow = true
         }
+      } else if (this.showGrid || this.searching || this.highlight) {
+        this.showGrid = false
+        this.searching = false
+        this.highlight = false
+      }
 
-        if (!this.showGrid && this.gridDemo) {
-          this.gridDemo = false;
-        }
-      });
+      if (tradeSettings.tradeInGameHighlight || tradeSettings.tradeOverlayHighlight) {
+        this.cd.detectChanges()
+      }
+
+      if (!this.showGrid && this.gridDemo) {
+        this.gridDemo = false
+      }
+    })
   }
 
   /**
@@ -377,12 +370,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    */
   public clearHighlight(): void {
     if (this.showGrid) {
-      this.showGrid = false;
-      this.cd.detectChanges();
+      this.showGrid = false
+      this.cd.detectChanges()
     }
 
     if (this.searching) {
-      this.commandService.clearCtrlF();
+      this.commandService.clearCtrlF()
     }
   }
 
@@ -394,30 +387,28 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
   public updateGridPosition(side: string, value: number): void {
     switch (side) {
       case 'top':
-        this.settingsService.get()
-          .subscribe(settings => {
-            const tradeSettings = <TradeUserSettings>settings;
-            this.gridLocation.top = value;
+        this.settingsService.get().subscribe((settings) => {
+          const tradeSettings = settings as TradeUserSettings
+          this.gridLocation.top = value
 
-            tradeSettings.tradeOverlayHighlightTop = this.gridLocation.top;
-            this.settingsService.save(tradeSettings);
+          tradeSettings.tradeOverlayHighlightTop = this.gridLocation.top
+          this.settingsService.save(tradeSettings)
 
-            this.cd.detectChanges();
-          });
-        break;
+          this.cd.detectChanges()
+        })
+        break
 
       case 'left':
-        this.settingsService.get()
-          .subscribe(settings => {
-            const tradeSettings = <TradeUserSettings>settings;
-            this.gridLocation.left = value;
+        this.settingsService.get().subscribe((settings) => {
+          const tradeSettings = settings as TradeUserSettings
+          this.gridLocation.left = value
 
-            tradeSettings.tradeOverlayHighlightLeft = this.gridLocation.left;
-            this.settingsService.save(tradeSettings);
+          tradeSettings.tradeOverlayHighlightLeft = this.gridLocation.left
+          this.settingsService.save(tradeSettings)
 
-            this.cd.detectChanges();
-          });
-        break;
+          this.cd.detectChanges()
+        })
+        break
     }
   }
 
@@ -427,13 +418,13 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * **It clears the Ctrl + F search command**
    */
   public setGridDemo(): void {
-    this.gridDemo = !this.gridDemo;
+    this.gridDemo = !this.gridDemo
 
     // Otherwise it's too dark to clearly see the stash tab squares
     if (this.searching) {
-      this.commandService.clearCtrlF();
+      this.commandService.clearCtrlF()
     }
 
-    this.cd.detectChanges();
+    this.cd.detectChanges()
   }
 }

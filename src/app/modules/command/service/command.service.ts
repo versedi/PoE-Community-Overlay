@@ -21,21 +21,21 @@ export class CommandService {
   }
 
   public ctrlF(text: string): void {
-    const prevText = this.clipboard.readText();
-    this.clipboard.writeText(text);
-    this.keyboard.keyTap(KeyCode.VK_KEY_F, ['control']);
-    this.keyboard.setKeyboardDelay(5);
-    this.keyboard.keyTap(KeyCode.VK_KEY_V, ['control']);
-    delay(200);
-    this.clipboard.writeText(prevText);
+    const prevText = this.clipboard.readText()
+    this.clipboard.writeText(text)
+    this.keyboard.keyTap(KeyCode.VK_KEY_F, ['control'])
+    this.keyboard.setKeyboardDelay(5)
+    this.keyboard.keyTap(KeyCode.VK_KEY_V, ['control'])
+    delay(200)
+    this.clipboard.writeText(prevText)
   }
 
-  public clearCtrlF():void{
-    this.keyboard.keyTap(KeyCode.VK_KEY_F, ['control']);
-    this.keyboard.setKeyboardDelay(5);
-    this.keyboard.keyTap(KeyCode.VK_X, ['control']);
-    this.keyboard.setKeyboardDelay(5);
-    this.keyboard.keyTap(KeyCode.VK_ESC);
+  public clearCtrlF(): void {
+    this.keyboard.keyTap(KeyCode.VK_KEY_F, ['control'])
+    this.keyboard.setKeyboardDelay(5)
+    this.keyboard.keyTap(KeyCode.VK_X, ['control'])
+    this.keyboard.setKeyboardDelay(5)
+    this.keyboard.keyTap(KeyCode.VK_ESC)
   }
 
   private init(): void {

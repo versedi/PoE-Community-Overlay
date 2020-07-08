@@ -17,14 +17,14 @@ export interface TradeUserSettings extends UserSettings {
   tradeSoldWhisper: string
   tradeStillInterestedWhisper: string
   tradeAutoKick: boolean
-  tradeAutoWhisper: boolean,
-  tradeOverlayHighlight: boolean,
-  tradeInGameHighlight: boolean,
-  tradeOverlayHighlightDropShadow: boolean,
-  tradeOverlayHighlightLeft: number,
-  tradeOverlayHighlightTop: number,
-  tradeOverlayHighlightWidth: number,
-  tradeOverlayHighlightHeight: number,
+  tradeAutoWhisper: boolean
+  tradeOverlayHighlight: boolean
+  tradeInGameHighlight: boolean
+  tradeOverlayHighlightDropShadow: boolean
+  tradeOverlayHighlightLeft: number
+  tradeOverlayHighlightTop: number
+  tradeOverlayHighlightWidth: number
+  tradeOverlayHighlightHeight: number
 }
 
 @Component({

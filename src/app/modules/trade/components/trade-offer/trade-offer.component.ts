@@ -124,11 +124,11 @@ export class TradeOfferComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {}
 
-  public ngAfterViewInit(): void { }
+  public ngAfterViewInit(): void {}
 
-  public ngOnDestroy(): void { }
+  public ngOnDestroy(): void {}
 
   /**
    * Ask to send a trade request to the buyer

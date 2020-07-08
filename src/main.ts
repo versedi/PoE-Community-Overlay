@@ -8,7 +8,10 @@ const setIgnoreMouseEvents = window.require('electron').remote.getCurrentWindow(
 
 /* Enable mouse events only if the mouse is over something it can interact with. Otherwise pass-through */
 window.addEventListener('mousemove', (event) => {
-  if (event.target === document.documentElement || (<HTMLElement>event.target).classList.value.indexOf('ignore-mouse') != -1) {
+  if (
+    event.target === document.documentElement ||
+    (event.target as HTMLElement).classList.value.indexOf('ignore-mouse') != -1
+  ) {
     setIgnoreMouseEvents(true, { forward: true })
   } else {
     setIgnoreMouseEvents(false)
