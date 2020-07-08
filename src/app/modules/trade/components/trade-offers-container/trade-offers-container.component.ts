@@ -11,6 +11,7 @@ import { TradeService } from '@modules/trade/services/trade.service'
 import { UserSettingsService } from 'src/app/layout/service'
 import { TradeUserSettings } from '../trade-settings/trade-settings.component'
 import { CommandService } from '@modules/command/service/command.service'
+import { GridLocation } from '../trade-stash-grid/trade-stash-grid.component'
 
 @Component({
   selector: 'app-trade-offers-container',
@@ -19,11 +20,6 @@ import { CommandService } from '@modules/command/service/command.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnDestroy {
-  /**
-   * List of the current trade offers received and not ignored, removed or completed yet.
-   */
-  public offers: Offer[] = []
-
   constructor(
     private cd: ChangeDetectorRef,
     private tradeService: TradeService,
@@ -33,6 +29,62 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     this.tradeService.offers.subscribe(this.handleNewOffer.bind(this))
     this.tradeService.tradeAccepted.subscribe(this.handleTradeAccepted.bind(this))
     this.tradeService.tradeCancelled.subscribe(this.handleTradeCancelled.bind(this))
+
+    this.setGridLocation()
+  }
+  /**
+   * List of the current trade offers received and not ignored, removed or completed yet.
+   */
+  public offers: Offer[] = []
+
+  /**
+   * Currently selected offer
+   */
+  public currentOffer: Offer = null
+
+  /**
+   * Show/Hide the item highlight grid
+   */
+  public highlight = false
+  public searching = false
+  public showGrid = false
+  public dropShadow = true
+  public darkerShadow = false
+
+  /**
+   * Grid Resizing
+   */
+  public gridLocation: GridLocation = {
+    top: 0,
+    left: 0,
+  }
+  public gridDemo = false
+  public pxTop = () => `${this.gridLocation.top}px`
+  public pxLeft = () => `${this.gridLocation.left}px`
+
+  /**
+   * Set the grid location based on the settings
+   */
+  private setGridLocation(): void {
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
+
+      let changes = false
+
+      if (tradeSettings.tradeOverlayHighlightLeft) {
+        changes = true
+        this.gridLocation.left = tradeSettings.tradeOverlayHighlightLeft
+      }
+
+      if (tradeSettings.tradeOverlayHighlightTop) {
+        changes = true
+        this.gridLocation.top = tradeSettings.tradeOverlayHighlightTop
+      }
+
+      if (changes) {
+        this.cd.detectChanges()
+      }
+    })
   }
 
   /**
@@ -95,6 +147,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
     if (index !== -1) {
       this.offers.splice(index, 1)
+
+      if (this.currentOffer === offer) {
+        this.currentOffer = null
+      }
+
       this.cd.detectChanges()
     }
   }
@@ -107,6 +164,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
 
     if (index !== -1) {
       this.offers.splice(index, 1)
+      this.currentOffer = null
+      this.clearHighlight()
       this.cd.detectChanges()
     }
   }
@@ -136,6 +195,7 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param name Name of the buyer to kick
    */
   public kickBuyer(name: string): void {
+    this.clearHighlight()
     this.commandService.command(`/kick ${name}`)
   }
 
@@ -157,6 +217,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendThanksWhisper(offer: Offer): void {
+    this.clearHighlight()
+
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
 
@@ -175,6 +237,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendStillInterestedWhisper(offer: Offer): void {
+    this.clearHighlight()
+
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
 
@@ -193,6 +257,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendBusyWhisper(offer: Offer): void {
+    this.clearHighlight()
+
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
 
@@ -211,6 +277,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the whisper
    */
   public sendSoldWhisper(offer: Offer): void {
+    this.clearHighlight()
+
     this.settingsService.get().subscribe((settings) => {
       const tradeSettings = settings as TradeUserSettings
 
@@ -230,6 +298,8 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer related to the trade request
    */
   public sendTradeRequest(offer: Offer): void {
+    this.clearHighlight()
+
     this.commandService.command(`/tradewith ${offer.buyerName}`)
     offer.tradeRequestSent = true
   }
@@ -239,8 +309,132 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * @param offer Offer
    */
   public sendPartyInvite(offer: Offer): void {
+    this.clearHighlight()
+
     this.commandService.command(`/invite ${offer.buyerName}`)
     offer.partyInviteSent = true
+    this.currentOffer = offer
+
     this.cd.detectChanges()
+  }
+
+  /**
+   * Show/Hide the highlighting grid
+   * Do/Undo the in-game search
+   */
+  public highlightItem(): void {
+    this.settingsService.get().subscribe((settings) => {
+      const tradeSettings = settings as TradeUserSettings
+
+      if (this.currentOffer) {
+        this.highlight = !this.highlight
+
+        if (tradeSettings.tradeOverlayHighlight) {
+          this.showGrid = this.highlight
+          this.dropShadow = tradeSettings.tradeOverlayHighlightDropShadow
+        }
+
+        if (tradeSettings.tradeInGameHighlight) {
+          this.searching = this.highlight
+
+          if (this.searching) {
+            this.commandService.ctrlF(this.currentOffer.itemName)
+          } else {
+            this.commandService.clearCtrlF()
+          }
+
+          this.darkerShadow = false
+        } else {
+          this.darkerShadow = true
+        }
+      } else if (this.showGrid || this.searching || this.highlight) {
+        this.showGrid = false
+        this.searching = false
+        this.highlight = false
+      }
+
+      if (tradeSettings.tradeInGameHighlight || tradeSettings.tradeOverlayHighlight) {
+        this.cd.detectChanges()
+      }
+
+      if (!this.showGrid && this.gridDemo) {
+        this.gridDemo = false
+      }
+    })
+  }
+
+  /**
+   * Hide the highlighting grid
+   * Clear the in-game search
+   * **Required if you want to send chat command/whispers**
+   */
+  public clearHighlight(): void {
+    if (this.showGrid) {
+      this.showGrid = false
+      this.cd.detectChanges()
+    }
+
+    if (this.searching) {
+      this.commandService.clearCtrlF()
+    }
+  }
+
+  /**
+   * Update the grid position XY. In pixels
+   * @param side left (x) or top (y)
+   * @param value how many pixel
+   */
+  public updateGridPosition(side: string, value: number): void {
+    switch (side) {
+      case 'top':
+        this.settingsService.get().subscribe((settings) => {
+          const tradeSettings = settings as TradeUserSettings
+          this.gridLocation.top = value
+
+          tradeSettings.tradeOverlayHighlightTop = this.gridLocation.top
+          this.settingsService.save(tradeSettings)
+
+          this.cd.detectChanges()
+        })
+        break
+
+      case 'left':
+        this.settingsService.get().subscribe((settings) => {
+          const tradeSettings = settings as TradeUserSettings
+          this.gridLocation.left = value
+
+          tradeSettings.tradeOverlayHighlightLeft = this.gridLocation.left
+          this.settingsService.save(tradeSettings)
+
+          this.cd.detectChanges()
+        })
+        break
+    }
+  }
+
+  /**
+   * Put the grid in demo mode.
+   * Display all the square of the grid with borders
+   * **It clears the Ctrl + F search command**
+   */
+  public setGridDemo(showGrid: boolean = false): void {
+    this.gridDemo = !this.gridDemo
+
+    if(showGrid) {
+      this.showGrid = this.gridDemo;
+    }
+
+    // Otherwise it's too dark to clearly see the stash tab squares
+    if (this.searching) {
+      this.commandService.clearCtrlF()
+    }
+
+    this.cd.detectChanges()
+  }
+
+  public checkIfdemo():void{
+    if(!this.currentOffer && this.showGrid){
+      this.showGrid = false;
+    }
   }
 }

@@ -63,7 +63,10 @@ export class ItemSectionRarityParserService implements ItemSectionParserService 
     }
 
     const masterMissionPhrases = this.getMasterMissionPhrases()
-    const masterMission = masterMissionPhrases.find((x) => item.sections.findIndex((section) => section.content.indexOf(x.prophecyText) !== -1) !== -1)
+    const masterMission = masterMissionPhrases.find(
+      (x) =>
+        item.sections.findIndex((section) => section.content.indexOf(x.prophecyText) !== -1) !== -1
+    )
     if (masterMission) {
       target.type += ` (${masterMission.masterName})`
       target.typeId = this.baseItemTypesService.search(target.type)
@@ -220,7 +223,7 @@ export class ItemSectionRarityParserService implements ItemSectionParserService 
       {
         prophecyText: this.clientString.translate('ProphecyQuestTrackerJun'),
         masterName: this.clientString.translate('MasterNameJun'),
-      }
+      },
     ]
   }
 }

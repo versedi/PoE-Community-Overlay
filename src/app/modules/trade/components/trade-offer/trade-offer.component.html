@@ -1,4 +1,4 @@
-<div class="tile" [class.currentOffer]="buyerInvited" (mouseenter)="showFloatingButtonsContainer(true)" (mouseleave)="showFloatingButtonsContainer(false)">
+<div class="tile" [class.currentOffer]="offer.partyInviteSent" (mouseenter)="showFloatingButtonsContainer(true)" (mouseleave)="showFloatingButtonsContainer(false)">
     <div class="floating-buttons" (mouseenter)="showFloatingButtonsContainer(true)"
         (mouseleave)="showFloatingButtonsContainer(false)" *ngIf="showFloatingButtons">
         <!-- Don't use tooltips! These will trigger the mouse leave/enter events -->

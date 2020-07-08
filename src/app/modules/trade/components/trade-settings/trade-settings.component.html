@@ -53,3 +53,31 @@
         </div>
     </div>
 </app-card>
+
+<app-card [title]="'Item Highlighting' | translate">
+    <div class="row">
+        <div class="col">
+            <mat-slide-toggle [checked]="settings.tradeOverlayHighlight" (change)="settings.tradeOverlayHighlight = $event.checked">
+                {{ 'Overlay highlight' | translate }}
+            </mat-slide-toggle>
+        </div>
+        <div class="col">
+            <mat-slide-toggle [checked]="settings.tradeOverlayHighlightDropShadow" (change)="settings.tradeOverlayHighlightDropShadow = $event.checked">
+                {{ 'Overlay highlight drop shadow' | translate }}
+            </mat-slide-toggle>
+        </div>
+        <div class="col">
+            <mat-slide-toggle [checked]="settings.tradeInGameHighlight" (change)="settings.tradeInGameHighlight = $event.checked">
+                {{ 'In-Game highlight' | translate }}
+            </mat-slide-toggle>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+           
+        </div>
+        <div class="col">
+          
+        </div>
+    </div>
+</app-card>

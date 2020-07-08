@@ -9,6 +9,7 @@ const regTradeAccepted = /Trade accepted/gi;
 const regTradeCancelled = /Trade cancelled/gi;
 const regGuild = /<.+> .+/gi;
 const regTwoDots = /: Hi, /gi;
+const regItemLocation = /(stash tab ".+"; position: left [0-9]+, top [0-9])/gi;
 
 const currencyNameToImage = {
     alt: 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollMagic.png?v=6d9520174f6643e502da336e76b730d3',
@@ -28,6 +29,13 @@ const currencyNameToImage = {
     transmute: 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyUpgradeToMagic.png?v=333b8b5e28b73c62972fc66e7634c5c8',
     silver: 'https://web.poecdn.com/image/Art/2DItems/Currency/SilverObol.png?v=93c1b204ec2736a2fe5aabbb99510bcf'
 };
+
+/**
+ * Find items that are greater then 1x1
+ */
+import { ItemGridSize, ItemType } from './types/chat-items'
+import * as types from './types/chat-items';
+const itemTypes = types.default;
 
 export class ChatListener {
     private ipcMain: IpcMain;
@@ -125,6 +133,30 @@ export class ChatListener {
 
         var time = line.substring(0, 19);
 
+        var stashTabName = "",
+            left = "",
+            top = "";
+
+        if (line.match(regItemLocation)) {
+            stashTabName = line.substring(line.lastIndexOf('(stash tab "') + 12, line.lastIndexOf('"; position:'));
+            left = line.substring(line.lastIndexOf('; position: left ') + 17, line.lastIndexOf(', top '));
+            top = line.substring(line.lastIndexOf(', top ') + 6, line.lastIndexOf(')'));
+        }
+
+        var size = {
+            width: 1,
+            height: 1
+        };
+
+        for(let type of itemTypes){
+            for(let base of type.bases){
+                if(item.indexOf(base) != -1){
+                    size = type.size;
+                    break;
+                }
+            }
+        }
+
         this.webContents.send('new-trade-offer', {
             buyerName,
             itemName: item,
@@ -133,6 +165,12 @@ export class ChatListener {
                 currency,
                 value: priceValue,
                 image: currencyNameToImage[currency]
+            },
+            itemLocation: {
+                stashTabName,
+                left: Number(left),
+                top: Number(top),
+                ...size
             }
         });
     }

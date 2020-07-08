@@ -9,11 +9,17 @@ import {
   TradeSettingsComponent,
   TradeUserSettings,
 } from './components/trade-settings/trade-settings.component'
+import { TradeStashGridComponent } from './components/trade-stash-grid/trade-stash-grid.component'
 
 @NgModule({
   providers: [{ provide: FEATURE_MODULES, useClass: TradeModule, multi: true }],
-  declarations: [TradeOfferComponent, TradeOffersContainerComponent, TradeSettingsComponent],
-  exports: [TradeOfferComponent, TradeOffersContainerComponent],
+  declarations: [
+    TradeOfferComponent,
+    TradeOffersContainerComponent,
+    TradeSettingsComponent,
+    TradeStashGridComponent,
+  ],
+  exports: [TradeOfferComponent, TradeOffersContainerComponent, TradeStashGridComponent],
   imports: [SharedModule],
 })
 export class TradeModule implements FeatureModule {
@@ -27,6 +33,13 @@ export class TradeModule implements FeatureModule {
       tradeStillInterestedWhisper: 'Are you still interested in my {item} listed for {price}?',
       tradeAutoKick: true,
       tradeAutoWhisper: true,
+      tradeOverlayHighlight: true,
+      tradeInGameHighlight: true,
+      tradeOverlayHighlightDropShadow: true,
+      tradeOverlayHighlightLeft: 15,
+      tradeOverlayHighlightTop: 161,
+      tradeOverlayHighlightWidth: 53,
+      tradeOverlayHighlightHeight: 53,
     }
 
     return {

@@ -1,0 +1,58 @@
+<div class="grid ignore-mouse">
+    <div class="row ignore-mouse" [style.height]="pxHeight()" *ngFor="let row of [1,2,3,4,5,6,7,8,9,10,11,12]; let rowIndex = index">
+        <div class="col ignore-mouse" [style.width]="pxWidth()" *ngFor="let col of [1,2,3,4,5,6,7,8,9,10,11,12]; let colIndex = index">
+            <ng-container *ngIf="demo; else notDemo">
+                <div class="box box-highlight box-small-left box-small-right box-small-bottom box-small-top"></div>
+            </ng-container>
+            <ng-template #notDemo>
+                <ng-container
+                    *ngIf="location && (location.left <= colIndex + 1 && location.left + location.width > colIndex + 1) && (location.top <= rowIndex + 1 && location.top + location.height > rowIndex + 1); else darkBox">
+                    <div class="box box-highlight ignore-mouse" [class.box-col-left]="location.left === colIndex + 1"
+                        [class.box-col-right]="location.left + location.width - 1 === colIndex + 1"
+                        [class.box-row-top]="location.top === rowIndex + 1"
+                        [class.box-row-bottom]="location.top + location.height - 1 === rowIndex + 1"></div>
+                </ng-container>
+                <ng-template #darkBox>
+                    <div class="box" [class.dark-box]="!darkerShadow" [class.darker-box]="darkerShadow"
+                        *ngIf="dropShadow">
+                    </div>
+                </ng-template>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class='resizers' *ngIf="demo">
+        <div class='resizer resizer-left'>
+            <div class="inline arrow" (click)="resize('left', -1)">
+                <mat-icon>chevron_left</mat-icon>
+            </div>
+            <div class="inline arrow" (click)="resize('left', 1)">
+                <mat-icon>chevron_right</mat-icon>
+            </div>
+        </div>
+        <div class='resizer resizer-right'>
+            <div class="inline arrow" (click)="resize('right', -1)">
+                <mat-icon>chevron_left</mat-icon>
+            </div>
+            <div class="inline arrow" (click)="resize('right', 1)">
+                <mat-icon>chevron_right</mat-icon>
+            </div>
+        </div>
+        <div class='resizer resizer-top'>
+            <div class="arrow" (click)="resize('top', -1)">
+                <mat-icon>expand_less</mat-icon>
+            </div>
+            <div class="arrow" (click)="resize('top', 1)">
+                <mat-icon>expand_more</mat-icon>
+            </div>
+        </div>
+        <div class='resizer resizer-bottom' >
+            <div class="arrow" (click)="resize('bottom', -1)">
+                <mat-icon>expand_less</mat-icon>
+            </div>
+            <div class="arrow" (click)="resize('bottom', 1)">
+                <mat-icon>expand_more</mat-icon>
+            </div>
+        </div>
+    </div>
+</div>
