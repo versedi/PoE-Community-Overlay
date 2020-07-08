@@ -417,8 +417,12 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
    * Display all the square of the grid with borders
    * **It clears the Ctrl + F search command**
    */
-  public setGridDemo(): void {
+  public setGridDemo(showGrid: boolean = false): void {
     this.gridDemo = !this.gridDemo
+
+    if(showGrid) {
+      this.showGrid = this.gridDemo;
+    }
 
     // Otherwise it's too dark to clearly see the stash tab squares
     if (this.searching) {
@@ -426,5 +430,11 @@ export class TradeOffersContainerComponent implements OnInit, AfterViewInit, OnD
     }
 
     this.cd.detectChanges()
+  }
+
+  public checkIfdemo():void{
+    if(!this.currentOffer && this.showGrid){
+      this.showGrid = false;
+    }
   }
 }

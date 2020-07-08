@@ -17,10 +17,12 @@
 </div>
 
 <div class="grid ignore-mouse" *ngIf="showGrid" [style.top]="pxTop()" [style.left]="pxLeft()">
-  <app-trade-stash-grid [location]="currentOffer.itemLocation" [dropShadow]="dropShadow" [darkerShadow]="darkerShadow" [demo]="gridDemo" [gridLocation]="gridLocation" (evTop)="updateGridPosition('top', $event)" (evLeft)="updateGridPosition('left', $event)"></app-trade-stash-grid>
+  <app-trade-stash-grid [location]="currentOffer ? currentOffer.itemLocation : {left:0, top: 0, width: 0, height: 0}" [dropShadow]="dropShadow" [darkerShadow]="darkerShadow" [demo]="gridDemo" [gridLocation]="gridLocation" (evTop)="updateGridPosition('top', $event)" (evLeft)="updateGridPosition('left', $event)"></app-trade-stash-grid>
 </div>
 
-<button class="btn-adjust-grid" mat-raised-button *ngIf="showGrid" (click)="setGridDemo()">{{gridDemo ? 'Save Grid' : 'Adjust Grid'}}</button>
+<button class="btn-adjust-grid" mat-raised-button *ngIf="showGrid" (click)="setGridDemo(!currentOffer)">{{gridDemo ? 'Save Grid' : 'Adjust Grid'}}</button>
+
+<mat-icon class="icon-adjust-grid" (click)="setGridDemo(true);">grid_on</mat-icon>
 
 <p class="lbl-adjust-message" *ngIf="gridDemo && showGrid">Please adjust the grid approximately to your stash tab layout. <br>You need to do that, because every player use different screen resolution, size and settings. <br>But, don't worry you'll have to do this only once.</p>
 
