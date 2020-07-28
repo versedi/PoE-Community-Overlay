@@ -35,6 +35,18 @@ features, bugs, and development. All are welcome to join.
   - An in game browser to display the created search <details><summary>Click to see image</summary>![browser](img/item_browser_0.5.8.jpg)</details>
   - Lets you price tag the item by clicking the desired bar/value
 
+### Trade Manager
+  
+The trade manager handles all incoming and outgoing trade offers for you! No need to invite, kick and whisper players manually anymore!
+
+For example, 
+``@From PlayerABC: Hi, I would like to buy your Saqawal's Nest listed for 3.7 exalted in Standard``
+
+- Shows a notification in bottom center of the screen which you can click or ignore<details><summary>Click to see image</summary>![TradeManager](https://user-images.githubusercontent.com/25111613/86523078-e0f5bf80-be34-11ea-9a89-f07ab023e059.png)</details>
+- After clicking pick what to do invite to party, ask to wait or disband with custom messages<details><summary>Click to see image</summary>![TradeManager](https://user-images.githubusercontent.com/25111613/86523224-27e4b480-be37-11ea-9e2c-ecf1199d1028.png)</details>
+
+![See Trade Manager readme for details how to setup and use](TRADE-MANAGER.md)
+
 ### Other Features
 
   - Bind in game commands to a custom hotkey
@@ -113,7 +125,7 @@ You can change these shortcuts in the user settings menu.
 | Linux   | In Progress | - Allow running this app on Linux       |
 | Harvest | In Progress | - Data for Harvest League 2020/06/19    |
 | Vulkan  | In Progress | - Support for Vulkan video modes        |
-| Trade   | In Progress | - Send messages<br>- Trade UI<br>- etc. |
+| Trade   | Done        | - Send messages<br>- Trade UI<br>- etc. |
 
 ## Developer Docs
 
