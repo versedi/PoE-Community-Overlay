@@ -91,8 +91,7 @@ export class ItemSectionRarityParserService implements ItemSectionParserService 
         .translate('MetamorphosisItemisedBossDisplayText')
         .replace('%1%', this.baseItemTypesService.translate(target.typeId))
       const metamorphBodyParts = this.getMetamorphBodyParts()
-      for (let i = 0; i < metamorphBodyParts.length; i++) {
-        const metamorphBodyPart = metamorphBodyParts[i]
+      for (const metamorphBodyPart of metamorphBodyParts) {
         if (metamorphItemNameDisplay.replace('%2%', metamorphBodyPart.key) === target.type) {
           target.name = target.type
           target.typeId = metamorphBodyPart.value
