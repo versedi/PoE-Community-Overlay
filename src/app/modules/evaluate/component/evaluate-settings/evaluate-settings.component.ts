@@ -47,7 +47,6 @@ export interface EvaluateUserSettings extends UserSettings {
   evaluateQueryFetchCount: number
   evaluateQueryInitialSearch: boolean
   evaluatePricing: EvaluatePricing
-  evaluateBrowserAlwaysExternal: boolean
 }
 
 export const EVALUATE_QUERY_DEBOUNCE_TIME_MAX = 100

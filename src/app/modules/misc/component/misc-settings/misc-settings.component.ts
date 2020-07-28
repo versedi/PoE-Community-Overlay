@@ -10,7 +10,6 @@ export enum MiscStashNavigation {
 
 export interface MiscUserSettings extends UserSettings {
   miscStashNavigationMode: MiscStashNavigation
-  miscStashNavigationModifier: 'CmdOrCtrl' | 'Shift' | 'Alt'
   miscStashHighlightKeybinding: string
   miscWikiKeybinding: string
   miscWikiExternalKeybinding: string

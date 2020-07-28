@@ -1,0 +1,31 @@
+<div class="tile" [class.currentOffer]="offer.partyInviteSent" (mouseenter)="showFloatingButtonsContainer(true)" (mouseleave)="showFloatingButtonsContainer(false)">
+    <div class="floating-buttons" (mouseenter)="showFloatingButtonsContainer(true)"
+        (mouseleave)="showFloatingButtonsContainer(false)" *ngIf="showFloatingButtons">
+        <!-- Don't use tooltips! These will trigger the mouse leave/enter events -->
+        <ng-container *ngIf="!offer.partyInviteSent">
+            <button mat-mini-fab *ngFor="let btn of preInviteFloatingButtons" [color]="btn.color" class="btn-floating"
+                (click)="btn.onMouseClick()">
+                <mat-icon aria-hidden="false" aria-label="Icon">{{btn.icon}}</mat-icon>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="offer.partyInviteSent">
+            <button mat-mini-fab *ngFor="let btn of postInviteFloatingButtons" [color]="btn.color" class="btn-floating"
+                (click)="btn.onMouseClick()">
+                <mat-icon aria-hidden="false" aria-label="Icon">{{btn.icon}}</mat-icon>
+            </button>
+        </ng-container>
+    </div>
+
+    <div class="item-name" *ngIf="offer && offer.itemName" [class.green]="offer.partyInviteSent">
+        {{ (offer.itemName.length > 10) ? (offer.itemName | slice:0:10) + '...' : (offer.itemName) }}
+    </div>
+    <div class="price">
+        <img [src]="offer.price.image" [alt]="offer.price.currency"
+            width="50" height="50" />
+    </div>
+    <span class="price-value" *ngIf="offer && offer.price">
+        {{offer.price.value}}x
+    </span>
+
+    <mat-icon aria-hidden="false" aria-label="Icon" class="buyer-joined-icon" *ngIf="offer.buyerJoined &&offer.partyInviteSent">person</mat-icon>
+</div>

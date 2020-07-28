@@ -1,0 +1,33 @@
+<div class="offers">
+  <ng-container *ngFor="let offer of offers; let i = index">
+    <app-trade-offer 
+    (evIgnoreOffer)="ignoreOffer(offer)" 
+    (evTradeRequest)="sendTradeRequest(offer)"
+    (evTradeAccepted)="removeAcceptedTradeOffer()"
+    (evTradeCancelled)="resetOfferTrades()"
+    (evPartyInvite)="sendPartyInvite(offer)"
+    (evPartyKick)="kickBuyer(offer.buyerName)"
+    (evRemoveOffer)="removeOffer(offer)"
+    (evStillInterestedWhisper)="sendStillInterestedWhisper(offer)"
+    (evBusyWhisper)="sendBusyWhisper(offer)"
+    (evSoldWhisper)="sendSoldWhisper(offer)"
+    [offer]="offer" 
+    *ngIf="i < 8"></app-trade-offer>
+  </ng-container>
+</div>
+
+<div class="grid ignore-mouse" *ngIf="showGrid" [style.top]="pxTop()" [style.left]="pxLeft()">
+  <app-trade-stash-grid [location]="currentOffer ? currentOffer.itemLocation : {left:0, top: 0, width: 0, height: 0}" [dropShadow]="dropShadow" [darkerShadow]="darkerShadow" [demo]="gridDemo" [gridLocation]="gridLocation" (evTop)="updateGridPosition('top', $event)" (evLeft)="updateGridPosition('left', $event)"></app-trade-stash-grid>
+</div>
+
+<button class="btn-adjust-grid" mat-raised-button *ngIf="showGrid" (click)="setGridDemo(!currentOffer)">{{gridDemo ? 'Save Grid' : 'Adjust Grid'}}</button>
+
+<mat-icon class="icon-adjust-grid" (click)="setGridDemo(true);">grid_on</mat-icon>
+
+<p class="lbl-adjust-message" *ngIf="gridDemo && showGrid">Please adjust the grid approximately to your stash tab layout. <br>You need to do that, because every player use different screen resolution, size and settings. <br>But, don't worry you'll have to do this only once.</p>
+
+<div *ngIf="currentOffer" class="item-location">
+  <p class="lbl-item-location">Tab "{{currentOffer.itemLocation.stashTabName}}"<br>Left: {{currentOffer.itemLocation.left}}, Top: {{currentOffer.itemLocation.top}}</p>
+  <br>
+  <button class="btn-highlight-item" mat-raised-button (click)="highlightItem()">{{highlight ? 'Hide' : 'Show'}}</button>
+</div>

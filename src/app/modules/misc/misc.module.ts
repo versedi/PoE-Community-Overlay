@@ -23,7 +23,6 @@ export class MiscModule implements FeatureModule {
   public getSettings(): UserSettingsFeature {
     const defaultSettings: MiscUserSettings = {
       miscStashNavigationMode: MiscStashNavigation.Disabled,
-      miscStashNavigationModifier: 'CmdOrCtrl',
       miscStashHighlightKeybinding: 'Alt + F',
       miscWikiKeybinding: 'Alt + W',
       miscWikiExternalKeybinding: 'CmdOrCtrl + Alt + W',
@@ -65,12 +64,12 @@ export class MiscModule implements FeatureModule {
       const inverse = settings.miscStashNavigationMode === MiscStashNavigation.Inverse
       features.push({
         name: !inverse ? 'stash-left' : 'stash-right',
-        accelerator: `${settings.miscStashNavigationModifier} + MouseWheelUp`,
+        accelerator: 'CmdOrCtrl + MouseWheelUp',
         passive: true,
       })
       features.push({
         name: !inverse ? 'stash-right' : 'stash-left',
-        accelerator: `${settings.miscStashNavigationModifier} + MouseWheelDown`,
+        accelerator: 'CmdOrCtrl + MouseWheelDown',
         passive: true,
       })
     }

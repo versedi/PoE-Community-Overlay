@@ -94,10 +94,7 @@ export class EvaluateSearchComponent implements OnInit, OnDestroy {
   public onCurrencyClick(event: MouseEvent): void {
     const search = this.search$.value
     if (search?.url?.length) {
-      this.browser.open(
-        search.url,
-        this.settings.evaluateBrowserAlwaysExternal ? true : event.ctrlKey
-      )
+      this.browser.open(search.url, event.ctrlKey)
     }
   }
 

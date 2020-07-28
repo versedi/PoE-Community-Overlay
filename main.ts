@@ -20,6 +20,7 @@ import * as game from './electron/game'
 import * as hook from './electron/hook'
 import * as log from './electron/log'
 import * as robot from './electron/robot'
+import * as chatListener from './electron/chat-listener';
 import { State } from './electron/state'
 
 if (!app.requestSingleInstanceLock()) {
@@ -202,10 +203,10 @@ function createWindow(): BrowserWindow {
     },
     focusable: false,
     skipTaskbar: true,
-    show: false,
+    show: false
   })
   win.removeMenu()
-  win.setIgnoreMouseEvents(true)
+  win.setIgnoreMouseEvents(true);
 
   if (process.platform !== 'linux') {
     win.setAlwaysOnTop(true, 'pop-up-menu', 1)
@@ -275,7 +276,9 @@ function loadApp(self: BrowserWindow, route: string = ''): void {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`),
     })
-    self.loadURL('http://localhost:4200' + route)
+    self.loadURL('http://localhost:4200' + route);
+    
+    win.setIgnoreMouseEvents(true, {forward:true});
   } else {
     const appUrl = url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
@@ -286,7 +289,9 @@ function loadApp(self: BrowserWindow, route: string = ''): void {
   }
 
   if (serve) {
-    self.webContents.openDevTools({ mode: 'undocked' })
+    self.webContents.openDevTools({ mode: 'undocked' });
+
+    win.setIgnoreMouseEvents(true, {forward:true});
   }
 }
 
@@ -355,6 +360,10 @@ try {
     setTimeout(() => {
       createWindow()
       createTray()
+
+      if (win) {
+        chatListener.register(ipcMain, win.webContents);
+      }
     }, 300)
     setUserAgent()
   })

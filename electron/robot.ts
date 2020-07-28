@@ -1,4 +1,4 @@
-import { IpcMain } from 'electron'
+import { IpcMain, clipboard } from 'electron'
 import * as robot from 'robotjs'
 
 export function register(ipcMain: IpcMain): void {

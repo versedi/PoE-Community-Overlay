@@ -47,8 +47,6 @@ export class ItemFramePropertiesComponent implements OnInit {
       'quality',
       'gemExperience',
       'prophecyText',
-      'durability',
-      'storedExperience',
     ]
     this.isArmour = this.item.category?.startsWith(ItemCategory.Armour) || false
     this.isWeapon = this.item.category?.startsWith(ItemCategory.Weapon) || false

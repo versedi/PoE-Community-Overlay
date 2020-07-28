@@ -10,6 +10,7 @@ import { AppTranslationsLoader } from './app-translations.loader'
 import { AppComponent } from './app.component'
 import { LayoutModule } from './layout/layout.module'
 import { OverlayComponent, UserSettingsComponent } from './layout/page'
+import { TradeModule } from '@modules/trade/trade.module'
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     MapModule,
     MiscModule,
     BookmarkModule,
+    TradeModule,
   ],
   bootstrap: [AppComponent],
 })

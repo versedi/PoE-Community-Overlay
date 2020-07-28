@@ -7,7 +7,6 @@ export interface ItemOverviewLine {
   name: string
   baseType: string
   mapTier: number
-  levelRequired: number
   links: number
   gemLevel: number
   gemQuality: number
