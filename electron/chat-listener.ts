@@ -813,7 +813,8 @@ export class ChatListener {
         var buyerName = line.match(regGuild) ? line.substring(line.indexOf('> ') + 2, line.lastIndexOf(' Hi, ')) : line.substring(line.indexOf('@From ') + 6, line.match(regTwoDots) ? line.lastIndexOf(': Hi, ') : line.lastIndexOf(' Hi, '));
 
         if (buyerName.lastIndexOf(':') == buyerName.length) {
-            buyerName = buyerName.substring(0, buyerName.length - 1);
+            buyerName = buyerName.replace(':', '')
+            console.log(buyerName);
         }
 
         var item = line.substring(line.lastIndexOf('buy your ') + 9, line.lastIndexOf(' listed for'));
